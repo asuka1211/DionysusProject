@@ -9,3 +9,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DionysusProject"
 include ':app'
+include ':auth'
+include ':buildsrc'
