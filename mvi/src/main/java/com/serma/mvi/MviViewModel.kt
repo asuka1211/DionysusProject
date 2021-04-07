@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-abstract class BaseViewModel<Effect : MviEffect, Intent : MviIntent,
+abstract class MviViewModel<Effect : MviEffect, Intent : MviIntent,
         ViewState : MviViewState, PartitionState : MviPartitionState>(
     protected val reducer: MviReducer<ViewState, PartitionState>,
     protected val useCase: MviUseCase<PartitionState, Intent, Effect>
