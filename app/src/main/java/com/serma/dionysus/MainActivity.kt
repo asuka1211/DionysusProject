@@ -7,12 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.serma.auth.ui.login.LoginScreenPreview
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Greeting(name = "Maxim")
+            LoginScreenPreview()
         }
     }
 
@@ -23,4 +24,5 @@ class MainActivity : AppCompatActivity() {
             Text(text = "Hi $name")
         }
     }
+
 }

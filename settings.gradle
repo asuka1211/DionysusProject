@@ -11,3 +11,5 @@ rootProject.name = "DionysusProject"
 include ':app'
 include ':auth'
 include ':buildsrc'
+include ':common_ui'
+include ':mvi'
