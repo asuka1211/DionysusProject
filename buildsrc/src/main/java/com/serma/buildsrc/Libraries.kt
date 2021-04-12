@@ -1,10 +1,27 @@
 package com.serma.buildsrc
 
+import org.gradle.api.JavaVersion
+
 object Version{
     const val daggerVersion = "2.33"
     const val glideVersion = "4.11.0"
     const val navVersion = "2.3.4"
-    const val composeVersion = '1.0.0-beta02'
+    const val composeVersion = "1.0.0-beta03"
+}
+
+object AndroidConfig{
+    const val compileSdkVersion = 30
+    const val buildToolsVersion = "30.0.3"
+    const val applicationId = "com.serma.dionysus"
+    const val minSdkVersion = 21
+    const val targetSdkVersion = 30
+    const val versionName = "1.0"
+    const val versionCode = 1
+    const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val compose = true
+    const val jvmTarget = "1.8"
+    const val useIR = true
+    val sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 object Libraries {
@@ -20,9 +37,17 @@ object Libraries {
     const val navUi = "androidx.navigation:navigation-ui-ktx:${Version.navVersion}"
     const val navCompose = "androidx.navigation:navigation-compose:1.0.0-alpha09"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
+    const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01"
     const val composeUi = "androidx.compose.ui:ui:${Version.composeVersion}"
     const val composeMaterial = "androidx.compose.material:material:${Version.composeVersion}"
     const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Version.composeVersion}"
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
     const val composeActivity = "androidx.activity:activity-compose:1.3.0-alpha04"
+    const val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32"
+    const val coreKtx = "androidx.core:core-ktx:1.3.2"
+    const val appCompat = "androidx.appcompat:appcompat:1.2.0"
+    const val jUnit = "junit:junit:4.13.2"
+    const val jUnitAndroid = "androidx.test.ext:junit:1.1.2"
+    const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
 }
