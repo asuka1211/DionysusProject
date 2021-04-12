@@ -1,0 +1,21 @@
+plugins {
+    id "org.openapi.generator" version "5.1.0"
+}
+
+// Builds a Kotlin client by default.
+openApiGenerate {
+    generatorName = "kotlin"
+    library = "jvm-retrofit2"
+    inputSpec = "$rootDir/models/swagger.json".toString()
+    outputDir = "$buildDir/models/generated".toString()
+    apiPackage = "org.openapi.example.api"
+    invokerPackage = "org.openapi.example.invoker"
+    modelPackage = "org.openapi.example.model"
+    configOptions = [
+            serializationLibrary: "gson",
+            enumPropertyNaming: "UPPERCASE",
+            serializableModel: "true",
+            useCoroutines: "true"
+    ]
+    skipValidateSpec = true
+}
