@@ -23,10 +23,10 @@ enum class ETypeEvent(val value: kotlin.Int) {
 
 
     @SerializedName(value = "0")
-    _0(0),
+    0(0),
 
     @SerializedName(value = "1")
-    _1(1);
+    1(1);
 
 
     /**

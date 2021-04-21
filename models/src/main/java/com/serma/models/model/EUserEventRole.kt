@@ -23,16 +23,16 @@ enum class EUserEventRole(val value: kotlin.Int) {
 
 
     @SerializedName(value = "1")
-    _1(1),
+    1(1),
 
     @SerializedName(value = "2")
-    _2(2),
+    2(2),
 
     @SerializedName(value = "4")
-    _4(4),
+    4(4),
 
     @SerializedName(value = "8")
-    _8(8);
+    8(8);
 
 
     /**

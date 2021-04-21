@@ -1,8 +1,11 @@
 import com.serma.buildsrc.*
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -57,6 +60,10 @@ dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.materialDesign)
     implementation(Libraries.composeUi)
+    implementation(Libraries.retrofit2)
+    implementation(Libraries.coroutines)
+    implementation(Libraries.accompanist)
+    implementation(Libraries.coroutinesAndroid)
     implementation(Libraries.composeMaterial)
     implementation(Libraries.composeUiTooling)
     implementation(Libraries.lifecycle)
@@ -65,6 +72,8 @@ dependencies {
     androidTestImplementation(Libraries.jUnitAndroid)
     androidTestImplementation(Libraries.espresso)
     implementation(Libraries.kotlinStd)
-
-    implementation(project(":auth"))
+    implementation(Libraries.navCompose)
+    implementation(Libraries.kotlinxSerialization)
+    kapt(Libraries.daggerHiltKapt)
+    implementation(Libraries.daggerHilt)
 }

@@ -1,8 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="auth_login">Логин</string>
-    <string name="auth_login_hint_login" tools:ignore="ExtraTranslation">Введите логин</string>
-    <string name="auth_login_hint_password" tools:ignore="ExtraTranslation">Введите пароль</string>
-    <string name="auth_login_btn">Войти</string>
-    <string name="auth_login_need_account">Есть аккаунт?</string>
-    <string name="auth_login_registration">Зарегистрироваться</string>
-</resources>

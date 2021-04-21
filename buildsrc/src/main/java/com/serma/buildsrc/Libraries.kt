@@ -2,14 +2,14 @@ package com.serma.buildsrc
 
 import org.gradle.api.JavaVersion
 
-object Version{
-    const val daggerVersion = "2.33"
+object Version {
+    const val daggerHiltVersion = "2.33-beta"
     const val glideVersion = "4.11.0"
     const val navVersion = "2.3.4"
-    const val composeVersion = "1.0.0-beta03"
+    const val composeVersion = "1.0.0-beta04"
 }
 
-object AndroidConfig{
+object AndroidConfig {
     const val compileSdkVersion = 30
     const val buildToolsVersion = "30.0.3"
     const val applicationId = "com.serma.dionysus"
@@ -25,10 +25,11 @@ object AndroidConfig{
 }
 
 object Libraries {
-    const val dagger = "com.google.dagger:dagger:${Version.daggerVersion}"
-    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Version.daggerVersion}"
+    const val daggerHilt = "com.google.dagger:hilt-android:${Version.daggerHiltVersion}"
+    const val daggerHiltKapt = "com.google.dagger:hilt-compiler:${Version.daggerHiltVersion}"
     const val retrofit2 = "com.squareup.retrofit2:retrofit:2.9.0"
-    const val kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+    const val kotlinxSerializationConverter =
+        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.0"
     const val materialDesign = "com.google.android.material:material:1.2.0"
     const val glide = "com.github.bumptech.glide:glide:${Version.glideVersion}"
@@ -50,4 +51,6 @@ object Libraries {
     const val jUnit = "junit:junit:4.13.2"
     const val jUnitAndroid = "androidx.test.ext:junit:1.1.2"
     const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
+    const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
+    const val accompanist = "com.google.accompanist:accompanist-glide:0.7.1"
 }

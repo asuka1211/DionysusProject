@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/zero1211/Desktop/diplom/DionysusProject/app/src/main/res/drawable/ic_task.xml" value="0.171875" />
+        <entry key="..\:/Users/zero1211/Desktop/diplom/DionysusProject/events/src/main/res/drawable/ic_event.xml" value="0.1859375" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
