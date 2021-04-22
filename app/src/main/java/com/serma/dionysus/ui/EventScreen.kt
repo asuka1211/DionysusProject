@@ -1,7 +1,7 @@
 package com.serma.dionysus.ui
 
 import androidx.compose.runtime.Composable
-import com.serma.dionysus.common.common.ui.PersonItem
+import com.serma.dionysus.common.ui.PersonItem
 
 @Composable
 fun EventScreen() {

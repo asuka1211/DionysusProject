@@ -1,6 +1,6 @@
 package com.serma.dionysus.ui.login
 
-import com.serma.dionysus.common.common.mvi.MviViewModel
+import com.serma.dionysus.common.mvi.MviViewModel
 import com.serma.dionysus.ui.login.mvi.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

@@ -1,6 +1,6 @@
 package com.serma.dionysus.ui.login.mvi
 
-import com.serma.dionysus.common.common.mvi.MviReducer
+import com.serma.dionysus.common.mvi.MviReducer
 
 class LoginReducer: MviReducer<LoginViewState, LoginPartitionState> {
     override suspend fun reduce(

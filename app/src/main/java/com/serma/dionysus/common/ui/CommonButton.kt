@@ -1,4 +1,4 @@
-package com.serma.dionysus.common.common.ui
+package com.serma.dionysus.common.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

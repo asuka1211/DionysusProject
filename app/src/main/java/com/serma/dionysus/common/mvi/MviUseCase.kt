@@ -1,4 +1,4 @@
-package com.serma.dionysus.common.common.mvi
+package com.serma.dionysus.common.mvi
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

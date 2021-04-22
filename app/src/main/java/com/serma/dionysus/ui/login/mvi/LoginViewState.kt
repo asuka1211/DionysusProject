@@ -1,6 +1,6 @@
 package com.serma.dionysus.ui.login.mvi
 
-import com.serma.dionysus.common.common.mvi.MviViewState
+import com.serma.dionysus.common.mvi.MviViewState
 
 data class LoginViewState(
     val error: Throwable? = null,
