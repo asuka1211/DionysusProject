@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.serma.dionysus.common.ui.CommonGraphPreview
 import com.serma.dionysus.ui.EventScreen
 import com.serma.dionysus.ui.ProfileData
 import com.serma.dionysus.ui.ProfileScreen
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            EventScreen()
+            CommonGraphPreview()
         }
     }
 
