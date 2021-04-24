@@ -9,7 +9,7 @@
 * https://openapi-generator.tech
 * Do not edit the class manually.
 */
-package com.serma.auth.model
+package com.serma.dionysus.model
 
 
 import kotlinx.serialization.SerialName

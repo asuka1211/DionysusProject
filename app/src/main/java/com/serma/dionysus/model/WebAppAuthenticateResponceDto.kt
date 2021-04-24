@@ -11,30 +11,35 @@
 */
 package com.serma.dionysus.model
 
-
 import kotlinx.serialization.SerialName
 import java.io.Serializable
 
 /**
  * 
  * @param id 
- * @param email 
- * @param name 
- * @param imageId 
- * @param phone 
+ * @param wrongCredentials 
+ * @param username 
+ * @param userRole 
+ * @param token 
+ * @param expiresTime 
+ * @param refreshToken 
  */
 
-data class WebAppUpdateUserRequestDto (
+data class WebAppAuthenticateResponceDto (
     @SerialName("id")
     val id: java.util.UUID? = null,
-    @SerialName("email")
-    val email: kotlin.String? = null,
-    @SerialName("name")
-    val name: kotlin.String? = null,
-    @SerialName("imageId")
-    val imageId: java.util.UUID? = null,
-    @SerialName("phone")
-    val phone: kotlin.String? = null
+    @SerialName("wrongCredentials")
+    val wrongCredentials: kotlin.Boolean? = null,
+    @SerialName("username")
+    val username: kotlin.String? = null,
+    @SerialName("userRole")
+    val userRole: EUserRole? = null,
+    @SerialName("token")
+    val token: kotlin.String? = null,
+    @SerialName("expiresTime")
+    val expiresTime: kotlin.Long? = null,
+    @SerialName("refreshToken")
+    val refreshToken: kotlin.String? = null
 ) : Serializable {
     companion object {
         private const val serialVersionUID: Long = 123
