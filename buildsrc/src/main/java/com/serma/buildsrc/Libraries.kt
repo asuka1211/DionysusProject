@@ -3,10 +3,10 @@ package com.serma.buildsrc
 import org.gradle.api.JavaVersion
 
 object Version {
-    const val daggerHiltVersion = "2.33-beta"
+    const val daggerHiltVersion = "2.35"
     const val glideVersion = "4.11.0"
     const val navVersion = "2.3.4"
-    const val composeVersion = "1.0.0-beta04"
+    const val composeVersion = "1.0.0-beta05"
 }
 
 object AndroidConfig {
