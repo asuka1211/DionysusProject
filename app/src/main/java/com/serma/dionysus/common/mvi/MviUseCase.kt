@@ -8,5 +8,5 @@ abstract class MviUseCase<PartitionState : MviPartitionState, Intent : MviIntent
     private val _effectSubscription: MutableSharedFlow<Effect> = MutableSharedFlow()
     val effectSubscription = _effectSubscription.asSharedFlow()
 
-    abstract suspend fun resolve(intent: Intent): PartitionState
+    abstract fun resolve(intent: Intent): PartitionState
 }

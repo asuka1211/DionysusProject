@@ -55,7 +55,7 @@ interface AccountApi {
      * @return [WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto]
      */
     @GET("api/Account/refresh/{refreshToken}")
-    suspend fun apiAccountRefreshRefreshTokenGet(@Path("refreshToken") refreshToken: java.util.UUID): Response<WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto>
+    suspend fun apiAccountRefreshRefreshTokenGet(@Path("refreshToken") refreshToken: String): Response<WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto>
 
     /**
      * 
