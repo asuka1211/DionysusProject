@@ -52,5 +52,7 @@ object Libraries {
     const val jUnitAndroid = "androidx.test.ext:junit:1.1.2"
     const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
     const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0"
+    const val kotlinxSerializationAdapter ="com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     const val accompanist = "com.google.accompanist:accompanist-glide:0.7.1"
+    const val coroutinesAdapter = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0"
 }

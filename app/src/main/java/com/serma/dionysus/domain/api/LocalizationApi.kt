@@ -20,8 +20,8 @@ interface LocalizationApi {
      * @param fileId  
      * @return [WebAppResponseDto]
      */
-    @POST("api/Localization/import/{localeId}/{fileId}")
-    suspend fun apiLocalizationImportLocaleIdFileIdPost(@Path("localeId") localeId: java.util.UUID, @Path("fileId") fileId: java.util.UUID): Response<WebAppResponseDto>
+//    @POST("api/Localization/import/{localeId}/{fileId}")
+//    suspend fun apiLocalizationImportLocaleIdFileIdPost(@Path("localeId") localeId: java.util.UUID, @Path("fileId") fileId: java.util.UUID): Response<WebAppResponseDto>
 
     /**
      * 

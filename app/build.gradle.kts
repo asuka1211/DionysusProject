@@ -64,6 +64,8 @@ dependencies {
     implementation(Libraries.composeUi)
     implementation(Libraries.retrofit2)
     implementation(Libraries.coroutines)
+    implementation(Libraries.coroutinesAdapter)
+    implementation(Libraries.kotlinxSerializationAdapter)
     implementation(Libraries.accompanist)
     implementation(Libraries.coroutinesAndroid)
     implementation(Libraries.composeMaterial)

@@ -4,9 +4,9 @@ import com.serma.dionysus.common.mvi.MviViewState
 
 data class LoginViewState(
     val error: Throwable? = null,
-    val state: AuthState = AuthState.NONE
+    val loading: Boolean = false,
 ) : MviViewState
 
 enum class AuthState {
-    NONE, LOADING, COMPLETE
+    NONE, LOADING, SUCCESS, WRONG_CREDENTIALS
 }

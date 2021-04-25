@@ -15,8 +15,7 @@ interface AccountApi {
      * @param linkToken  
      * @return [WebAppResponseDto]
      */
-    @GET("api/Account/approve/{linkToken}")
-    suspend fun apiAccountApproveLinkTokenGet(@Path("linkToken") linkToken: kotlin.String): Response<WebAppResponseDto>
+
 
     /**
      * 
@@ -30,7 +29,7 @@ interface AccountApi {
      * @return [WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto]
      */
     @POST("api/Account/login")
-    suspend fun apiAccountLoginPost(@Body webAuthentocationRequestDto: WebAuthentocationRequestDto? = null): Response<WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto>
+    suspend fun apiAccountLoginPost(@Body webAuthentocationRequestDto: WebAuthentocationRequestDto? = null): Response<WebAppResponseDto<WebAppAuthenticateResponceDto>>
 
     /**
      * 
@@ -55,7 +54,7 @@ interface AccountApi {
      * @return [WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto]
      */
     @GET("api/Account/refresh/{refreshToken}")
-    suspend fun apiAccountRefreshRefreshTokenGet(@Path("refreshToken") refreshToken: java.util.UUID): Response<WebAppAuthenticateResponceDtoWebAppResponseWithEntityDto>
+    suspend fun apiAccountRefreshRefreshTokenGet(@Path("refreshToken") refreshToken: String): Response<WebAppResponseDto<WebAppAuthenticateResponceDto>>
 
     /**
      * 
@@ -67,8 +66,7 @@ interface AccountApi {
      * @param webAppRegistrationRequestDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Account/registration")
-    suspend fun apiAccountRegistrationPost(@Body webAppRegistrationRequestDto: WebAppRegistrationRequestDto? = null): Response<WebAppResponseDto>
+
 
     /**
      * 
@@ -80,8 +78,7 @@ interface AccountApi {
      * @param webAppRegistrationRequestDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Account/registrationbyinvite")
-    suspend fun apiAccountRegistrationbyinvitePost(@Body webAppRegistrationRequestDto: WebAppRegistrationRequestDto? = null): Response<WebAppResponseDto>
+
 
     /**
      * 
@@ -93,8 +90,7 @@ interface AccountApi {
      * @param webAppResendEmailDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Account/resend")
-    suspend fun apiAccountResendPost(@Body webAppResendEmailDto: WebAppResendEmailDto? = null): Response<WebAppResponseDto>
+
 
     /**
      * 
@@ -106,8 +102,7 @@ interface AccountApi {
      * @param webAppRestorePasswordDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Account/restore")
-    suspend fun apiAccountRestorePost(@Body webAppRestorePasswordDto: WebAppRestorePasswordDto? = null): Response<WebAppResponseDto>
+
 
     /**
      * 
@@ -143,7 +138,6 @@ interface AccountApi {
      * @param webAppUpdateUserRequestDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @PUT("api/Account/update")
-    suspend fun apiAccountUpdatePut(@Body webAppUpdateUserRequestDto: WebAppUpdateUserRequestDto? = null): Response<WebAppResponseDto>
+
 
 }

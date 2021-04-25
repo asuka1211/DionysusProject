@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.serma.dionysus.R
 import com.serma.dionysus.auth.domain.RefreshTokenRemoteSource
+import com.serma.dionysus.utils.Result
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class SessionManagerImpl constructor(
+class SessionManagerImpl @Inject constructor(
     private val remoteSource: RefreshTokenRemoteSource,
-    context: Context
+    @ApplicationContext context: Context
 ) : SessionManager {
 
     private var prefs: SharedPreferences =
@@ -47,8 +52,20 @@ class SessionManagerImpl constructor(
     override fun updateToken(): String? {
         var refreshToken: String? = null
         getRefreshToken()?.let {
-            refreshToken = remoteSource.refreshToken(it)
-            saveTokenData(it, it, 213) //TODO ПОМЕНЯТЬ С ГОТОВЫМ БЕКОМ
+            GlobalScope.launch {
+                val response = remoteSource.refreshToken(it)
+                refreshToken = when (response) {
+                    is Result.Error -> null
+                    is Result.Success -> {
+                        saveTokenData(
+                            response.data.token,
+                            response.data.refreshToken,
+                            response.data.expiresTime
+                        )
+                        response.data.token
+                    }
+                }
+            }
         }
         return refreshToken
     }
