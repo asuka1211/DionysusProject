@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 abstract class MviViewModel<Effect : MviEffect, Intent : MviIntent,
         ViewState : MviViewState, PartitionState : MviPartitionState>(
-    protected val reducer: MviReducer<ViewState, PartitionState>,
-    protected val useCase: MviUseCase<PartitionState, Intent, Effect>
+    private val reducer: MviReducer<ViewState, PartitionState>,
+    private val useCase: MviUseCase<PartitionState, Intent, Effect>
 ) : ViewModel() {
 
     private val initialState: ViewState by lazy { createInitialState() }
@@ -37,9 +37,10 @@ abstract class MviViewModel<Effect : MviEffect, Intent : MviIntent,
     private fun subscribeEvents() {
         viewModelScope.launch {
             intent
-                .map { useCase.resolve(it) }
+                .flatMapConcat { useCase.resolve(it) }
                 .scan(initialState, reducer::reduce)
-                .map { _uiState.value = it }
+                .collect { _uiState.value = it }
+
             useCase.effectSubscription.collect { _effect.send(it) }
         }
     }
