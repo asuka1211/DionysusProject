@@ -15,8 +15,8 @@ interface EventApi {
      * @param webAppEventDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Event/create")
-    suspend fun apiEventCreatePost(@Body webAppEventDto: WebAppEventDto? = null): Response<WebAppResponseDto>
+//    @POST("api/Event/create")
+//    suspend fun apiEventCreatePost(@Body webAppEventDto: WebAppEventDto? = null): Response<WebAppResponseDto>
 
     /**
      * 
@@ -28,8 +28,8 @@ interface EventApi {
      * @param id  
      * @return [WebAppResponseDto]
      */
-    @DELETE("api/Event/{id}")
-    suspend fun apiEventIdDelete(@Path("id") id: java.util.UUID): Response<WebAppResponseDto>
+//    @DELETE("api/Event/{id}")
+//    suspend fun apiEventIdDelete(@Path("id") id: java.util.UUID): Response<WebAppResponseDto>
 
     /**
      * 
@@ -42,8 +42,8 @@ interface EventApi {
      * @param webAppEventDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @PUT("api/Event/{id}")
-    suspend fun apiEventIdPut(@Path("id") id: java.util.UUID, @Body webAppEventDto: WebAppEventDto? = null): Response<WebAppResponseDto>
+//    @PUT("api/Event/{id}")
+//    suspend fun apiEventIdPut(@Path("id") id: java.util.UUID, @Body webAppEventDto: WebAppEventDto? = null): Response<WebAppResponseDto>
 
     /**
      * 
@@ -55,8 +55,8 @@ interface EventApi {
      * @param invitePersonDto  (optional)
      * @return [WebAppResponseDto]
      */
-    @POST("api/Event/invite")
-    suspend fun apiEventInvitePost(@Body invitePersonDto: InvitePersonDto? = null): Response<WebAppResponseDto>
+//    @POST("api/Event/invite")
+//    suspend fun apiEventInvitePost(@Body invitePersonDto: InvitePersonDto? = null): Response<WebAppResponseDto>
 
     /**
      * 
