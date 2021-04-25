@@ -3,8 +3,9 @@ package com.serma.dionysus.auth
 import com.serma.dionysus.auth.manager.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class AuthInterceptor(private val sessionManager: SessionManager) : Interceptor {
+class AuthInterceptor @Inject constructor (private val sessionManager: SessionManager) : Interceptor {
 
     companion object {
         private const val URL_REFRESH = "http://cv-dentistry.ru/api/Account/refresh/"

@@ -27,19 +27,19 @@ import java.io.Serializable
 
 data class WebAppAuthenticateResponceDto (
     @SerialName("id")
-    val id: java.util.UUID? = null,
+    val id: String? = null,
     @SerialName("wrongCredentials")
-    val wrongCredentials: kotlin.Boolean? = null,
+    val wrongCredentials: kotlin.Boolean,
     @SerialName("username")
     val username: kotlin.String? = null,
     @SerialName("userRole")
     val userRole: EUserRole? = null,
     @SerialName("token")
-    val token: kotlin.String? = null,
+    val token: kotlin.String,
     @SerialName("expiresTime")
-    val expiresTime: kotlin.Long? = null,
+    val expiresTime: kotlin.Long,
     @SerialName("refreshToken")
-    val refreshToken: kotlin.String? = null
+    val refreshToken: kotlin.String
 ) : Serializable {
     companion object {
         private const val serialVersionUID: Long = 123
