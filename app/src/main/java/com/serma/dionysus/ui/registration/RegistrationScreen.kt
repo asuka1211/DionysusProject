@@ -1,4 +1,4 @@
-package com.serma.auth.ui.registration
+package com.serma.dionysus.ui.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
