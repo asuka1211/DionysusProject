@@ -1,11 +1,13 @@
-import com.serma.buildsrc.*
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import com.serma.buildsrc.AndroidConfig
+import com.serma.buildsrc.Libraries
+import com.serma.buildsrc.Version
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version "1.4.30"
 }
 
 android {

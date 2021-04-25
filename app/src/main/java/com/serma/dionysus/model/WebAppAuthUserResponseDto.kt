@@ -11,26 +11,28 @@
 */
 package com.serma.dionysus.model
 
-
 import kotlinx.serialization.SerialName
 import java.io.Serializable
 
 /**
  * 
  * @param id 
+ * @param username 
+ * @param userRole 
  * @param email 
- * @param name 
  * @param imageId 
  * @param phone 
  */
 
-data class WebAppUpdateUserRequestDto (
+data class WebAppAuthUserResponseDto (
     @SerialName("id")
     val id: java.util.UUID? = null,
+    @SerialName("username")
+    val username: kotlin.String? = null,
+    @SerialName("userRole")
+    val userRole: EUserRole? = null,
     @SerialName("email")
     val email: kotlin.String? = null,
-    @SerialName("name")
-    val name: kotlin.String? = null,
     @SerialName("imageId")
     val imageId: java.util.UUID? = null,
     @SerialName("phone")

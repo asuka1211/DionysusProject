@@ -1,4 +1,4 @@
-package com.serma.dionysus.common.common.mvi
+package com.serma.dionysus.common.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

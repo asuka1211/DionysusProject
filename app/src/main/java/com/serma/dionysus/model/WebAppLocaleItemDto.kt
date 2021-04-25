@@ -18,23 +18,17 @@ import java.io.Serializable
 /**
  * 
  * @param id 
- * @param email 
- * @param name 
- * @param imageId 
- * @param phone 
+ * @param key 
+ * @param value 
  */
 
-data class WebAppUpdateUserRequestDto (
+data class WebAppLocaleItemDto (
     @SerialName("id")
     val id: java.util.UUID? = null,
-    @SerialName("email")
-    val email: kotlin.String? = null,
-    @SerialName("name")
-    val name: kotlin.String? = null,
-    @SerialName("imageId")
-    val imageId: java.util.UUID? = null,
-    @SerialName("phone")
-    val phone: kotlin.String? = null
+    @SerialName("key")
+    val key: kotlin.String? = null,
+    @SerialName("value")
+    val value: kotlin.String? = null
 ) : Serializable {
     companion object {
         private const val serialVersionUID: Long = 123

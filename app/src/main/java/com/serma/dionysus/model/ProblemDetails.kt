@@ -11,31 +11,30 @@
 */
 package com.serma.dionysus.model
 
-
 import kotlinx.serialization.SerialName
 import java.io.Serializable
 
 /**
  * 
- * @param id 
- * @param email 
- * @param name 
- * @param imageId 
- * @param phone 
+ * @param type 
+ * @param title 
+ * @param status 
+ * @param detail 
+ * @param instance 
  */
 
-data class WebAppUpdateUserRequestDto (
-    @SerialName("id")
-    val id: java.util.UUID? = null,
-    @SerialName("email")
-    val email: kotlin.String? = null,
-    @SerialName("name")
-    val name: kotlin.String? = null,
-    @SerialName("imageId")
-    val imageId: java.util.UUID? = null,
-    @SerialName("phone")
-    val phone: kotlin.String? = null
-) : Serializable {
+data class ProblemDetails (
+    @SerialName("type")
+    val type: kotlin.String? = null,
+    @SerialName("title")
+    val title: kotlin.String? = null,
+    @SerialName("status")
+    val status: kotlin.Int? = null,
+    @SerialName("detail")
+    val detail: kotlin.String? = null,
+    @SerialName("instance")
+    val instance: kotlin.String? = null
+) :Serializable {
     companion object {
         private const val serialVersionUID: Long = 123
     }

@@ -1,6 +1,6 @@
 package com.serma.dionysus.ui.login.mvi
 
-import com.serma.dionysus.common.common.mvi.MviEffect
+import com.serma.dionysus.common.mvi.MviEffect
 
 class LoginEffect: MviEffect {
 }

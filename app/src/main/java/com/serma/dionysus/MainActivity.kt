@@ -1,41 +1,26 @@
 package com.serma.dionysus
 
-import com.serma.dionysus.ui.eventinfo.EventInfoScreen
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.serma.dionysus.common.common.ui.PersonData
+import com.serma.dionysus.ui.EventScreen
 import com.serma.dionysus.ui.ProfileData
 import com.serma.dionysus.ui.ProfileScreen
-import com.serma.dionysus.ui.eventinfo.EventInfoData
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val testData = PersonData("Максим Яковлев", "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg")
-        val listTestData = listOf(testData, testData, testData, testData)
-
-        val data = EventInfoData(
-            "Сдерживание грузина",
-            "Завтра",
-            "Сдерживание мощного, не молодого грузина посредством применения специально оборудованных водометов",
-            listTestData,
-            "Политех",
-            "300$"
-        )
         setContent {
-            EventInfoScreen(data)
-            //EventScreen()
+            EventScreen()
         }
     }
 
     @Preview
     @Composable
-    fun Greeting(name: String = "Maxim") {
+    fun Greeting(name: String = "Maxim"){
 //        val list = listOf(
 //            EventData(
 //                "Asd",
@@ -64,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 //                0.3f
 //            )
 //        )
-        // EventsScreen(list, {}, {}, {}, {})
+       // EventsScreen(list, {}, {}, {}, {})
         ProfileScreen(
             ProfileData(
                 "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",

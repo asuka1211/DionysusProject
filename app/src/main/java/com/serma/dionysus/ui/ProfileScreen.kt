@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.request.RequestOptions
 import com.google.accompanist.glide.GlideImage
 import com.serma.dionysus.R
-import com.serma.dionysus.common.common.ui.CommonGradientButton
-import com.serma.dionysus.common.common.ui.CommonTextFieldWithTitle
-import com.serma.dionysus.common.common.ui.SpacerRow
+import com.serma.dionysus.common.ui.CommonGradientButton
+import com.serma.dionysus.common.ui.CommonTextFieldWithTitle
+import com.serma.dionysus.common.ui.SpacerRow
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
 
