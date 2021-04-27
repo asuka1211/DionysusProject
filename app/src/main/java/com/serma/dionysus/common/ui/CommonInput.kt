@@ -160,39 +160,3 @@ fun ReadOnlyTextFieldWithTitle(
         )
     }
 }
-
-@Composable
-fun ReadOnlyTextFieldWithTitle(
-    @StringRes titleTextId: Int,
-    innerText: String
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            stringResource(titleTextId),
-            modifier = Modifier.padding(vertical = 8.dp),
-            style = MaterialTheme.typography.subtitle2,
-        )
-        TextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier
-                .fillMaxWidth(),
-            enabled = false,
-            shape = RoundedCornerShape(10.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = BackgroundInputColor,
-            ),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.subtitle2,
-            placeholder = {
-                Text(text = innerText, color = Color.Black)
-
-            }
-        )
-    }
-}
