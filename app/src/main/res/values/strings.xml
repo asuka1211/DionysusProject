@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">DionysusProject</string>
-    <string name="screen_route_events">Мероприятия</string>
-    <string name="screen_route_stats">Статистика</string>
-    <string name="screen_route_tasks">Задачи</string>
+    <string name="budget">Бюджет</string>
     <string name="auth_login">Логин</string>
     <string name="auth_password">Пароль</string>
     <string name="auth_hint_login">Введите логин</string>
@@ -13,7 +11,13 @@
     <string name="auth_registration_btn">Зарегистрироваться</string>
     <string name="auth_email">Введите Ваш E-mail</string>
     <string name="auth_hint_email">E-mail</string>
+    <string name="event_description">Описание мероприятия</string>
+    <string name="event_name">Название мероприятия</string>
+    <string name="event_date">Дата мероприятия</string>
+    <string name="event_location">Место проведения</string>
+    <string name="example">Example</string>
     <string name="logout">Выйти</string>
+    <string name="manager">Организаторы</string>
     <string name="profile">Профиль</string>
     <string name="profile_name">Имя</string>
     <string name="profile_name_hint">Введите имя</string>
@@ -26,5 +30,7 @@
     <string name="profile_about">О себе</string>
     <string name="profile_about_hint">Введите информацию о себе</string>
     <string name="save">Сохранить</string>
-    <string name="example">Example</string>
+    <string name="screen_route_events">Мероприятия</string>
+    <string name="screen_route_stats">Статистика</string>
+    <string name="screen_route_tasks">Задачи</string>
 </resources>

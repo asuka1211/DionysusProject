@@ -32,15 +32,16 @@ private fun CommonInputPreview() {
             CommonTextFieldWithTitle(R.string.example, R.string.example, {})
             Spacer(modifier = Modifier.height(10.dp))
             CommonPasswordTextField(R.string.example) {}
+            Spacer(modifier = Modifier.height(10.dp))
+            ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
         }
     }
 }
 
-
 @Composable
 fun CommonTextField(
     @StringRes hintTextId: Int,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
     val text = remember {
         mutableStateOf("")
@@ -62,7 +63,9 @@ fun CommonTextField(
         ),
         singleLine = true,
         textStyle = MaterialTheme.typography.subtitle2,
-        placeholder = { Text(text = stringResource(id = hintTextId)) }
+        placeholder = {
+            Text(text = stringResource(id = hintTextId))
+        }
     )
 }
 
@@ -118,4 +121,40 @@ fun CommonPasswordTextField(
         textStyle = MaterialTheme.typography.subtitle2,
         placeholder = { Text(text = stringResource(id = hintTextId)) }
     )
+}
+
+@Composable
+fun ReadOnlyTextFieldWithTitle(
+    @StringRes titleTextId: Int,
+    innerText: String
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            stringResource(titleTextId),
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        TextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth(),
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                backgroundColor = BackgroundInputColor,
+            ),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.subtitle2,
+            placeholder = {
+                Text(text = innerText, color = Color.Black)
+
+            }
+        )
+    }
 }

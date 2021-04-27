@@ -1,17 +1,12 @@
-package com.serma.dionysus.ui.login
+package com.serma.dionysus.ui.auth.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -20,16 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.serma.auth.ui.base.AuthTextPair
+import com.serma.dionysus.R
+import com.serma.dionysus.common.theme.DionysusTheme
+import com.serma.dionysus.common.ui.BrandLogo
 import com.serma.dionysus.common.ui.CommonGradientButton
-import com.serma.dionysus.common.ui.CommonImage
 import com.serma.dionysus.common.ui.CommonTextFieldWithTitle
 import com.serma.dionysus.common.ui.SpacerRow
-import com.serma.dionysus.common.theme.BackgroundColor
-import com.serma.dionysus.common.theme.DionysusTheme
-import com.serma.dionysus.R
-import com.serma.dionysus.ui.login.mvi.AuthState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.onEach
 
 private val color = Brush.horizontalGradient(listOf(Color(0xFF432DD4), Color(0xFF7180B9)))
 
@@ -37,31 +28,18 @@ private val color = Brush.horizontalGradient(listOf(Color(0xFF432DD4), Color(0xF
 @Composable
 fun LoginScreenPreview() {
     DionysusTheme {
-        LoginScreen()
+        LoginScreen({}, {})
     }
 }
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(
+    navigateSuccess: () -> Unit,
+    navigateRegistration: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel()
+) {
     val loginState = loginViewModel.uiState.collectAsState()
-    Surface(modifier = Modifier.background(BackgroundColor)) {
-        MainContent(loginViewModel, loginState.value.loading)
-    }
-}
-
-@Composable
-fun BrandLogo(modifier: Modifier) {
-    Column(
-        modifier = modifier
-            .wrapContentHeight(CenterVertically)
-    ) {
-        CommonImage(
-            R.drawable.auth_ic_logo,
-            Modifier
-                .align(CenterHorizontally)
-                .fillMaxHeight()
-        )
-    }
+    MainContent(loginViewModel, loginState.value.loading)
 }
 
 @Composable

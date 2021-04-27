@@ -26,6 +26,7 @@ object AndroidConfig {
 
 object Libraries {
     const val daggerHilt = "com.google.dagger:hilt-android:${Version.daggerHiltVersion}"
+    const val daggerHiltCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
     const val daggerHiltKapt = "com.google.dagger:hilt-compiler:${Version.daggerHiltVersion}"
     const val retrofit2 = "com.squareup.retrofit2:retrofit:2.9.0"
     const val kotlinxSerializationConverter =

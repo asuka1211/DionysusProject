@@ -80,4 +80,5 @@ dependencies {
     implementation(Libraries.kotlinxSerialization)
     kapt(Libraries.daggerHiltKapt)
     implementation(Libraries.daggerHilt)
+    implementation(Libraries.daggerHiltCompose)
 }

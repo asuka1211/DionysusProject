@@ -1,4 +1,4 @@
-package com.serma.auth.ui.registration
+package com.serma.dionysus.ui.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.serma.auth.ui.base.AuthTextPair
-import com.serma.dionysus.common.ui.CommonGradientButton
-import com.serma.dionysus.common.ui.CommonImage
-import com.serma.dionysus.common.ui.CommonTextFieldWithTitle
-import com.serma.dionysus.common.ui.SpacerRow
+import com.serma.dionysus.common.common.ui.CommonGradientButton
+import com.serma.dionysus.common.common.ui.CommonImage
+import com.serma.dionysus.common.common.ui.CommonTextFieldWithTitle
+import com.serma.dionysus.common.common.ui.SpacerRow
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.R

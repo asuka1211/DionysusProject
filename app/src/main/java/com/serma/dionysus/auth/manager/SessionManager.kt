@@ -6,4 +6,6 @@ interface SessionManager {
     fun getRefreshToken(): String?
     fun saveTokenData(token: String, refreshToken: String, timeLeft: Long)
     fun updateToken(): String?
+    fun isAuth(): Boolean
+    fun logout()
 }

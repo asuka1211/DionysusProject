@@ -40,68 +40,64 @@ fun ProfileScreenPreview() {
 
 @Composable
 fun ProfileScreen(data: ProfileData) {
-    DionysusTheme {
-        Surface(modifier = Modifier.background(BackgroundColor)) {
-            val state = rememberScrollState()
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .verticalScroll(state)
-            ) {
-                SpacerRow(16)
-                GlideImage(
-                    data = data.image,
-                    modifier = Modifier
-                        .height(160.dp)
-                        .width(160.dp)
-                        .align(Alignment.CenterHorizontally),
-                    requestBuilder = {
-                        val options = RequestOptions()
-                        options.circleCrop()
+    val state = rememberScrollState()
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .verticalScroll(state)
+    ) {
+        SpacerRow(16)
+        GlideImage(
+            data = data.image,
+            modifier = Modifier
+                .height(160.dp)
+                .width(160.dp)
+                .align(Alignment.CenterHorizontally),
+            requestBuilder = {
+                val options = RequestOptions()
+                options.circleCrop()
 
-                        apply(options)
-                    },
-                    contentDescription = "null",
-                    loading = {
-                        Box(Modifier.matchParentSize()) {
-                            CircularProgressIndicator(Modifier.align(Alignment.Center))
-                        }
-                    },
-                    fadeIn = true
-                )
-                CommonTextFieldWithTitle(
-                    titleTextId = R.string.profile_name,
-                    hintTextId = R.string.profile_name_hint,
-                    onValueChange = {})
-                CommonTextFieldWithTitle(
-                    titleTextId = R.string.profile_date,
-                    hintTextId = R.string.profile_date_hint,
-                    onValueChange = {})
-                CommonTextFieldWithTitle(
-                    titleTextId = R.string.profile_work,
-                    hintTextId = R.string.profile_work_hint,
-                    onValueChange = {})
-                CommonTextFieldWithTitle(
-                    titleTextId = R.string.profile_address,
-                    hintTextId = R.string.profile_address_hint,
-                    onValueChange = {})
-                CommonTextFieldWithTitle(
-                    titleTextId = R.string.profile_about,
-                    hintTextId = R.string.profile_about_hint,
-                    onValueChange = {})
-                SpacerRow(24)
-                CommonGradientButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    textId = R.string.save,
-                    gradient = color,
-                    onClick = {})
-                SpacerRow(16)
-            }
-        }
+                apply(options)
+            },
+            contentDescription = "null",
+            loading = {
+                Box(Modifier.matchParentSize()) {
+                    CircularProgressIndicator(Modifier.align(Alignment.Center))
+                }
+            },
+            fadeIn = true
+        )
+        CommonTextFieldWithTitle(
+            titleTextId = R.string.profile_name,
+            hintTextId = R.string.profile_name_hint,
+            onValueChange = {})
+        CommonTextFieldWithTitle(
+            titleTextId = R.string.profile_date,
+            hintTextId = R.string.profile_date_hint,
+            onValueChange = {})
+        CommonTextFieldWithTitle(
+            titleTextId = R.string.profile_work,
+            hintTextId = R.string.profile_work_hint,
+            onValueChange = {})
+        CommonTextFieldWithTitle(
+            titleTextId = R.string.profile_address,
+            hintTextId = R.string.profile_address_hint,
+            onValueChange = {})
+        CommonTextFieldWithTitle(
+            titleTextId = R.string.profile_about,
+            hintTextId = R.string.profile_about_hint,
+            onValueChange = {})
+        SpacerRow(24)
+        CommonGradientButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            textId = R.string.save,
+            gradient = color,
+            onClick = {})
+        SpacerRow(16)
     }
 }
 

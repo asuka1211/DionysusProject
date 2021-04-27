@@ -1,10 +1,9 @@
-package com.serma.dionysus.ui.login
+package com.serma.dionysus.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
 import com.serma.dionysus.common.mvi.MviViewModel
-import com.serma.dionysus.ui.login.mvi.*
+import com.serma.dionysus.ui.auth.login.mvi.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
