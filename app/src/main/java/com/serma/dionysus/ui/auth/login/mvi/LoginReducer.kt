@@ -1,4 +1,4 @@
-package com.serma.dionysus.ui.login.mvi
+package com.serma.dionysus.ui.auth.login.mvi
 
 import com.serma.dionysus.common.mvi.MviReducer
 import javax.inject.Inject

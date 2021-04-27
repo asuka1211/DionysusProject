@@ -1,9 +1,8 @@
-package com.serma.dionysus.ui.login.mvi
+package com.serma.dionysus.ui.auth.login.mvi
 
 import com.serma.dionysus.auth.manager.SessionManager
 import com.serma.dionysus.common.mvi.MviUseCase
 import com.serma.dionysus.domain.interactor.LoginInteractor
-import com.serma.dionysus.utils.Result
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

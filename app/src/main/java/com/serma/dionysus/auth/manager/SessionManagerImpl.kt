@@ -69,4 +69,16 @@ class SessionManagerImpl @Inject constructor(
         }
         return refreshToken
     }
+
+    override fun isAuth(): Boolean {
+        return prefs.getString(USER_TOKEN, null) != null
+    }
+
+    override fun logout() {
+        val editor = prefs.edit()
+        editor.remove(USER_TOKEN)
+        editor.remove(USER_TOKEN_REFRESH)
+        editor.remove(TIME_SAVED)
+        editor.apply()
+    }
 }

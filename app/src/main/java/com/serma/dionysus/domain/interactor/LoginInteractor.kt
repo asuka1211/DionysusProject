@@ -5,6 +5,7 @@ import com.serma.dionysus.model.WebAppAuthenticateResponceDto
 import com.serma.dionysus.model.WebAuthentocationRequestDto
 import com.serma.dionysus.utils.Result
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LoginInteractor @Inject constructor(private val remoteSource: LoginRemoteSource) {
@@ -13,5 +14,11 @@ class LoginInteractor @Inject constructor(private val remoteSource: LoginRemoteS
         password: String
     ): Flow<Result<WebAppAuthenticateResponceDto>> {
         return remoteSource.login(WebAuthentocationRequestDto(username, password))
+    }
+
+    suspend fun logout(
+        token: String
+    ): Flow<Result<Boolean>>{
+        return flow { true }
     }
 }

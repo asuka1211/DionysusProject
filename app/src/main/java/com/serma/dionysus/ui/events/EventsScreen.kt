@@ -1,29 +1,24 @@
-package com.serma.dionysus.ui
+package com.serma.dionysus.ui.events
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.serma.dionysus.R
 import com.serma.dionysus.common.theme.BackgroundColor
-import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.common.theme.LoadColor
 import com.serma.dionysus.common.theme.PrimaryColor
+import com.serma.dionysus.common.ui.CommonTopAppBar
+import com.serma.dionysus.common.ui.PagingItems
+import com.serma.dionysus.common.ui.pagingList
 
 @Preview
 @Composable
@@ -56,55 +51,47 @@ fun EventsScreenPreview() {
             0.3f
         )
     )
-    EventsScreen(list, {}, {}, {}, {})
+    //EventsScreen(list, {}, {}, {})
 }
 
 @Composable
 fun EventsScreen(
-    events: List<EventData>,
-    navigateBack: () -> Unit,
     openProfile: () -> Unit,
     openEvent: (String) -> Unit,
     logout: () -> Unit,
+    eventsViewModel: EventsViewModel
 ) {
-    val expanded = remember { mutableStateOf(false) }
-    DionysusTheme {
-        Surface(modifier = Modifier.background(BackgroundColor)) {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = {},
-                        navigationIcon = {
-                            IconButton(onClick = navigateBack) {
-                                Icon(Icons.Rounded.ArrowBack, null)
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = { expanded.value = true }) {
-                                Icon(
-                                    Icons.Filled.MoreVert,
-                                    null
-                                )
-                            }
-
-                            DropdownMenu(
-                                expanded = expanded.value,
-                                onDismissRequest = { expanded.value = true }
-                            ) {
-                                DropdownMenuItem(onClick = openProfile) {
-                                    Text(stringResource(id = R.string.profile))
-                                }
-                                DropdownMenuItem(onClick = logout) {
-                                    Text(stringResource(id = R.string.logout))
-                                }
-                            }
-                        }
-                    )
-                }
-            ) {
+    Scaffold(
+        topBar = { CommonTopAppBar(openProfile, logout) }
+    ) {
+        val state = eventsViewModel.uiState.collectAsState()
+        if (state.value.loading) {
+            Box(Modifier.fillMaxSize()) {
+                CircularProgressIndicator(Modifier.align(Alignment.Center))
+            }
+        } else {
+            state.value.events?.let {
                 LazyColumn {
-                    items(events) { event ->
-                        EventCard(event, openEvent)
+                    pagingList(
+                        it,
+                        state.value.loadingMore,
+                        loadMore = {
+                            eventsViewModel.loadMore(
+                                state.value.pageNumber,
+                                state.value.pageSize
+                            )
+                        },
+                        itemContent = { pos, event ->
+                            EventCard(event, openEvent)
+                        }) {
+                        Box(Modifier.fillMaxWidth()) {
+                            CircularProgressIndicator(
+                                Modifier
+                                    .size(60.dp)
+                                    .padding(8.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
                     }
                 }
             }
@@ -166,7 +153,6 @@ private fun EventCard(data: EventData, onClick: (String) -> Unit) {
                 overflow = TextOverflow.Ellipsis
             )
         }
-
     }
 }
 
