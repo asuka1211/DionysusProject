@@ -10,10 +10,10 @@ import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.serma.dionysus.R
-import com.serma.dionysus.common.common.ui.PersonData
-import com.serma.dionysus.common.common.ui.ReadOnlyTextFieldWithTitle
-import com.serma.dionysus.common.common.ui.UserCardsHolderWithTitle
 import com.serma.dionysus.common.theme.BackgroundColor
+import com.serma.dionysus.common.ui.PersonData
+import com.serma.dionysus.common.ui.ReadOnlyTextFieldWithTitle
+import com.serma.dionysus.common.ui.UserCardsHolderWithTitle
 
 @Composable
 fun EventInfoScreen(data: EventInfoData) {
