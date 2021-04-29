@@ -11,11 +11,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,16 +31,22 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.request.RequestOptions
 import com.google.accompanist.glide.GlideImage
 import com.serma.dionysus.R
+import com.serma.dionysus.common.mvi.BaseMviViewState
+import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.BackgroundInputColor
+import com.serma.dionysus.common.theme.DionysusTheme
 
 @Preview
 @Composable
 fun PreviewCommon() {
-    PersonItem(
-        "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg",
-        "лев ебать"
-    )
-    BrandLogo()
+//    PersonItem(
+//        "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg",
+//        "лев ебать"
+//    )
+    DionysusTheme {
+        BrandLogo()
+        CommonErrorDialog("Ошибка 111011 Время переустанавливать шиндовс") {}
+    }
 }
 
 @Composable
@@ -157,7 +165,7 @@ fun UserNameAndAvatar(name: String, url: String) {
 
                     apply(options)
                 },
-                contentDescription = "null",
+                contentDescription = null,
                 loading = {
                     Box(Modifier.matchParentSize()) {
                         CircularProgressIndicator(Modifier.align(Alignment.Center))
@@ -183,9 +191,11 @@ fun UserNameAndAvatar(name: String, url: String) {
 
 @Composable
 fun UserCardsHolder(data: List<PersonData>) {
-    Card(shape = RoundedCornerShape(16.dp)){
+    Card(shape = RoundedCornerShape(16.dp)) {
         Column(
-            modifier = Modifier.fillMaxWidth().background(color = BackgroundInputColor)
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = BackgroundInputColor)
         ) {
             data.forEach { person ->
                 UserNameAndAvatar(person.name, person.avatarUrl)
@@ -208,9 +218,70 @@ fun UserCardsHolderWithTitle(@StringRes titleTextId: Int, data: List<PersonData>
     }
 }
 
+@Composable
+fun CommonErrorDialog(errorText: String, modifier: Modifier = Modifier, reload: () -> Unit) {
+    Column(
+        modifier = modifier
+            .background(
+                color = BackgroundColor,
+                RoundedCornerShape(10.dp)
+            )
+            .padding(16.dp)
+    ) {
+        Text(
+            text = errorText,
+            Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+        )
+        OutlinedButton(onClick = reload, Modifier.padding(top = 16.dp)) {
+            Text(
+                text = stringResource(id = R.string.reload),
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(CenterVertically),
+                textAlign = TextAlign.Center,
+                color = Color.Black
+            )
+        }
+    }
+}
 
-data class PersonData(
-    val name: String,
-    val avatarUrl: String,
-)
+@Composable
+fun <T : BaseMviViewState> CommonBaseStateScreen(
+    state: State<T>,
+    reload: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    when {
+        state.value.loading -> {
+            Box(Modifier.fillMaxSize()) {
+                CircularProgressIndicator(Modifier.align(Alignment.Center))
+            }
+        }
+        state.value.error != null -> {
+            Box(Modifier.fillMaxSize()) {
+                CommonErrorDialog(
+                    state.value.error?.message!!,
+                    Modifier.align(Alignment.Center)
+                ) {
+                    reload()
+                }
+            }
+        }
+        else -> {
+            content()
+        }
+    }
+}
+
+        data class PersonData(
+            val name : String
+            ,
+            val avatarUrl
+            : String
+            ,
+            )
 

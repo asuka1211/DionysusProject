@@ -15,21 +15,23 @@ import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.navigation.Action
 import com.serma.dionysus.navigation.Destinations.Events
 import com.serma.dionysus.navigation.Destinations.Login
+import com.serma.dionysus.navigation.Destinations.Profile
 import com.serma.dionysus.navigation.Destinations.Registration
 import com.serma.dionysus.navigation.Destinations.Splash
 import com.serma.dionysus.ui.auth.login.LoginScreen
 import com.serma.dionysus.ui.events.EventsScreen
+import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
 
 @Composable
-fun DionysusComposeApp() {
+fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
     val navController = rememberNavController()
     val actions = remember(navController) { Action(navController) }
     DionysusTheme {
         Surface(modifier = Modifier.background(BackgroundColor)) {
             NavHost(
                 navController = navController,
-                startDestination = Events
+                startDestination = Profile
             ) {
                 composable(Splash) {
                     SplashScreen(
@@ -57,7 +59,13 @@ fun DionysusComposeApp() {
                         openProfile = actions.profile,
                         openEvent = {  },
                         logout = {},
-                        eventsViewModel = hiltNavGraphViewModel(it)
+                        viewModel = hiltNavGraphViewModel(it)
+                    )
+                }
+                composable(Profile) {
+                    ProfileScreen(
+                        openDatePicker = openDatePicker,
+                        viewModel = hiltNavGraphViewModel(it)
                     )
                 }
             }

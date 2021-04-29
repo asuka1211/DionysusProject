@@ -13,6 +13,7 @@ object Destinations {
     const val Login = "login"
     const val Registration = "registration"
     const val Events = "events"
+    const val Event = "events/{eventId}"
     const val Profile = "profile"
 }
 
