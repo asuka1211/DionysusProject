@@ -5,17 +5,21 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.serma.dionysus.ui.ProfileData
-import com.serma.dionysus.ui.ProfileScreen
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.serma.dionysus.ui.profile.ProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val calendar = Calendar.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DionysusComposeApp()
-            //CommonGraphPreview()
+            DionysusComposeApp(this::openDatePicker)
         }
     }
 
@@ -51,16 +55,27 @@ class MainActivity : AppCompatActivity() {
 //            )
 //        )
         // EventsScreen(list, {}, {}, {}, {})
-        ProfileScreen(
-            ProfileData(
-                "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
-                "Тодд Говард",
-                "12-11-1999",
-                "Бесезда",
-                "Маями",
-                "Люблю продавать скайрим "
-            )
-        )
+//        ProfileScreen(
+////            ProfileData(
+////                "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
+////                "Тодд Говард",
+////                "12-11-1999",
+////                "Бесезда",
+////            )
+//
+//        )
     }
 
+
+    private fun openDatePicker(callback: (Long) -> Unit) {
+        val picker = MaterialDatePicker.Builder.datePicker().build()
+        picker.show(supportFragmentManager, picker.toString())
+        picker.addOnPositiveButtonClickListener {
+            callback(it)
+        }
+    }
+}
+
+fun interface OpenDatePicker {
+    fun openDatePicker(callback: (Long) -> Unit)
 }

@@ -56,4 +56,5 @@ object Libraries {
     const val kotlinxSerializationAdapter ="com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     const val accompanist = "com.google.accompanist:accompanist-glide:0.7.1"
     const val coroutinesAdapter = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0"
+    const val dateTimeDialog = "io.github.vanpra.compose-material-dialogs:datetime:0.3.4"
 }

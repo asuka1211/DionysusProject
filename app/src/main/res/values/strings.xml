@@ -29,6 +29,7 @@
     <string name="example">Example</string>
     <string name="logout">Выйти</string>
     <string name="manager">Организаторы</string>
+    <string name="reload">Обновить</string>
     <string name="profile">Профиль</string>
     <string name="profile_name">Имя</string>
     <string name="profile_name_hint">Введите имя</string>
