@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -108,8 +107,8 @@ fun BrandLogo(modifier: Modifier = Modifier) {
 
 @Composable
 fun CommonTopAppBar(
-    openProfile: () -> Unit,
     logout: () -> Unit,
+    openProfile: (() -> Unit)? = null,
     navigateBack: (() -> Unit)? = null,
 ) {
     val expanded = remember { mutableStateOf(false) }
@@ -117,26 +116,26 @@ fun CommonTopAppBar(
         title = {},
         navigationIcon = {
             navigateBack?.let {
-                IconButton(onClick = it) {
+                IconButton(onClick = { navigateBack() }) {
                     Icon(Icons.Rounded.ArrowBack, null)
                 }
             }
         },
         actions = {
             IconButton(onClick = { expanded.value = true }) {
-                Icon(
-                    Icons.Filled.MoreVert,
-                    null
-                )
+                Icon(Icons.Filled.MoreVert, null)
             }
 
             DropdownMenu(
                 expanded = expanded.value,
                 onDismissRequest = { expanded.value = true }
             ) {
-                DropdownMenuItem(onClick = openProfile) {
-                    Text(stringResource(id = R.string.profile))
+                openProfile?.let {
+                    DropdownMenuItem(onClick = openProfile) {
+                        Text(stringResource(id = R.string.profile))
+                    }
                 }
+
                 DropdownMenuItem(onClick = logout) {
                     Text(stringResource(id = R.string.logout))
                 }
@@ -277,11 +276,9 @@ fun <T : BaseMviViewState> CommonBaseStateScreen(
     }
 }
 
-        data class PersonData(
-            val name : String
-            ,
-            val avatarUrl
-            : String
-            ,
-            )
+data class PersonData(
+    val name: String,
+    val avatarUrl
+    : String,
+)
 

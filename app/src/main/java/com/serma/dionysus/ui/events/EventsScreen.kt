@@ -60,7 +60,7 @@ fun EventsScreen(
     viewModel: EventsViewModel
 ) {
     Scaffold(
-        topBar = { CommonTopAppBar(openProfile, logout) }
+        topBar = { CommonTopAppBar(openProfile = openProfile, logout = logout) }
     ) {
         val state = viewModel.uiState.collectAsState()
         CommonBaseStateScreen(
