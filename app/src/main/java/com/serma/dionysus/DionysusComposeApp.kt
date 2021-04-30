@@ -6,10 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import com.serma.auth.ui.registration.RegistrationScreen
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
@@ -20,7 +17,6 @@ import com.serma.dionysus.navigation.Destinations.Login
 import com.serma.dionysus.navigation.Destinations.Profile
 import com.serma.dionysus.navigation.Destinations.Registration
 import com.serma.dionysus.navigation.Destinations.Splash
-import com.serma.dionysus.ui.EventScreen
 import com.serma.dionysus.ui.auth.login.LoginScreen
 import com.serma.dionysus.ui.eventinfo.EventInfoScreen
 import com.serma.dionysus.ui.events.EventsScreen
@@ -35,7 +31,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
         Surface(modifier = Modifier.background(BackgroundColor)) {
             NavHost(
                 navController = navController,
-                startDestination = Events
+                startDestination = Splash
             ) {
                 composable(Splash) {
                     SplashScreen(
@@ -61,21 +57,22 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                 composable(Events) {
                     EventsScreen(
                         openProfile = actions.profile,
-                        openEvent = { },
+                        openEvent = {id -> navController.navigate("event/$id")},
                         logout = { actions.logout },
                         viewModel = hiltNavGraphViewModel(it)
                     )
                 }
                 composable(
                     Event,
-                    arguments = listOf(navArgument("eventId") { defaultValue = null })
+                    arguments = listOf(navArgument("eventId") { defaultValue = "" })
                 ) {
-//                    EventInfoScreen(
-//                        openProfile = actions.profile,
-//                        openEvent = { },
-//                        logout = { actions.logout },
-//                        viewModel = hiltNavGraphViewModel(it)
-//                    )
+                    EventInfoScreen(
+                        eventId = requireNotNull(it.arguments?.getString("eventId")),
+                        openProfile = actions.profile,
+                        navigateBack = { navController.popBackStack() },
+                        logout = { actions.logout },
+                        viewModel = hiltNavGraphViewModel(it)
+                    )
                 }
                 composable(Profile) {
                     ProfileScreen(
