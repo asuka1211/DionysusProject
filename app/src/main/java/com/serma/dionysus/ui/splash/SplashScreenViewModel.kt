@@ -20,7 +20,7 @@ class SplashScreenViewModel @Inject constructor(private val sessionManager: Sess
 
     private fun checkSession() {
         viewModelScope.launch {
-            val authState = if (sessionManager.isAuth()) {
+            val authState = if (true) { //sessionManager.isAuth() вернуть
                 AuthStateSplash.AUTH
             } else {
                 AuthStateSplash.NOT_AUTH

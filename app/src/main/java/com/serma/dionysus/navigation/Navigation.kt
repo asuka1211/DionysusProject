@@ -1,7 +1,6 @@
 package com.serma.dionysus.navigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.popUpTo
 import com.serma.dionysus.navigation.Destinations.Event
@@ -16,7 +15,7 @@ object Destinations {
     const val Login = "login"
     const val Registration = "registration"
     const val Events = "events"
-    const val Event = "events/{eventId}"
+    const val Event = "event/{eventId}"
     const val Profile = "profile"
     const val Logout = "logout"
 }
@@ -25,7 +24,8 @@ class Action(navController: NavController) {
     val login: () -> Unit = { navController.navigate(Login) }
     val splash: () -> Unit = { navController.navigate(Splash) }
     val events: () -> Unit = { navController.navigate(Events) }
-    val event: () -> Unit = { navController.navigate(Event) }
+    val event: (String) -> Unit =
+        { id -> navController.navigate(Event.replace("{eventId}", id)) }
     val registration: () -> Unit = { navController.navigate(Registration) }
     val profile: () -> Unit = { navController.navigate(Profile) }
     val logout: () -> Unit = {
@@ -33,5 +33,4 @@ class Action(navController: NavController) {
             popUpTo(Login) {}
         }
     }
-    val navigateBack: () -> Unit = { navController.popBackStack() }
 }
