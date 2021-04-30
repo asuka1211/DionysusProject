@@ -37,7 +37,7 @@ object Libraries {
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Version.glideVersion}"
     const val navFragment = "androidx.navigation:navigation-fragment-ktx:${Version.navVersion}"
     const val navUi = "androidx.navigation:navigation-ui-ktx:${Version.navVersion}"
-    const val navCompose = "androidx.navigation:navigation-compose:1.0.0-alpha09"
+    const val navCompose = "androidx.navigation:navigation-compose:1.0.0-alpha10"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01"

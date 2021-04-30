@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class EventsInteractor @Inject constructor() {
 
     suspend fun load(pageNumber: Int, pageSize: Int = 50): Flow<Result<MockEvent>> {

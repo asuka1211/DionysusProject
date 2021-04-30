@@ -7,7 +7,9 @@ import com.serma.dionysus.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class LoginInteractor @Inject constructor(private val remoteSource: LoginRemoteSource) {
     suspend fun login(
         username: String,
