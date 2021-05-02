@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class ProfileInteractor @Inject constructor() {
 
     private var localMockData = ProfileData(
-        "https://flamp.ru/wd72983",
+        "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg",
         "Тодд Говард",
         "12-11-1999",
         "Бесезда",

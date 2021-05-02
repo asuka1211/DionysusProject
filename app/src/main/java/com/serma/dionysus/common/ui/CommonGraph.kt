@@ -16,35 +16,9 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.serma.dionysus.utils.ColorHelper
-
-@Preview
-@Composable
-fun CommonGraphPreview() {
-    val helper = ColorHelper()
-    val list = listOf(
-        SliceData(
-            10f,
-            helper.getColor(),
-            "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
-            "Тодд Говард",
-        ),
-        SliceData(
-            2f,
-            helper.getColor(),
-            "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
-            "Тодд Говард",
-        ),
-        SliceData(
-            5f,
-            helper.getColor(),
-            "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
-            "Тодд Говард",
-        )
-    )
-    InfoForGraph(GraphData(list), Modifier.padding(horizontal = 16.dp))
-}
 
 private val sectionPaint = Paint().apply {
     isAntiAlias = true
@@ -52,7 +26,7 @@ private val sectionPaint = Paint().apply {
 }
 
 @Composable
-fun CommonCircularGraph(data: GraphData, modifier: Modifier = Modifier) {
+fun <T : SliceData> CommonCircularGraph(data: GraphData<T>, modifier: Modifier = Modifier) {
     Canvas(
         modifier = modifier.fillMaxSize()
     ) {
@@ -80,17 +54,22 @@ fun CommonCircularGraph(data: GraphData, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun InfoForGraph(data: GraphData, modifier: Modifier = Modifier) {
+fun <T: SliceData> InfoForGraph(
+    data: GraphData<T>,
+    modifier: Modifier = Modifier,
+    donutSize: Dp,
+    itemContent: @Composable (T) -> Unit
+) {
     Column {
         CommonCircularGraph(
             GraphData(data.slices),
             Modifier
-                .height(100.dp)
                 .fillMaxWidth()
+                .height(donutSize)
                 .align(Alignment.CenterHorizontally)
         )
         SpacerRow(height = 16)
-        LazyColumn {
+        LazyColumn(modifier = modifier) {
             items(data.slices) { slice ->
                 Row(modifier.padding(top = 16.dp)) {
                     Box(
@@ -104,7 +83,7 @@ fun InfoForGraph(data: GraphData, modifier: Modifier = Modifier) {
                             .align(Alignment.CenterVertically)
                     )
                     Spacer(Modifier.width(16.dp))
-                    PersonItem(slice.url, slice.name)
+                    itemContent(slice)
                 }
             }
         }
@@ -134,9 +113,12 @@ private fun calculateArea(area: Size): Rect {
     )
 }
 
-data class GraphData(val slices: List<SliceData>) {
+data class GraphData<T : SliceData>(val slices: List<T>) {
     val totalProgress
         get() = slices.fold(0f) { acc, e -> acc + e.progress }
 }
 
-data class SliceData(val progress: Float, val color: Color, val url: String, val name: String)
+interface SliceData {
+    val progress: Float
+    val color: Color
+}

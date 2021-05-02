@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.serma.dionysus.R
 import com.serma.dionysus.common.ui.*
@@ -16,6 +17,7 @@ import com.serma.dionysus.common.ui.*
 fun EventInfoScreen(
     eventId: String,
     viewModel: EventInfoViewModel,
+    openGraph: (String) -> Unit,
     logout: () -> Unit,
     openProfile: () -> Unit,
     navigateBack: () -> Unit
@@ -72,6 +74,12 @@ fun EventInfoScreen(
                             innerText = data.budget,
                         )
                         Spacer(modifier = Modifier.height(16.dp))
+                        CommonGradientButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
+                            textId = R.string.open_graph,
+                            onClick = { openGraph(eventId) })
                     }
                 }
             }
