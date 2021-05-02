@@ -81,4 +81,6 @@ dependencies {
     kapt(Libraries.daggerHiltKapt)
     implementation(Libraries.daggerHilt)
     implementation(Libraries.daggerHiltCompose)
+    implementation(Libraries.pager)
+    implementation(Libraries.pagerIndicators)
 }

@@ -7,12 +7,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.*
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.serma.auth.ui.registration.RegistrationScreen
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.navigation.Action
 import com.serma.dionysus.navigation.Destinations.Event
 import com.serma.dionysus.navigation.Destinations.Events
+import com.serma.dionysus.navigation.Destinations.Graph
 import com.serma.dionysus.navigation.Destinations.Login
 import com.serma.dionysus.navigation.Destinations.Profile
 import com.serma.dionysus.navigation.Destinations.Registration
@@ -20,9 +22,11 @@ import com.serma.dionysus.navigation.Destinations.Splash
 import com.serma.dionysus.ui.auth.login.LoginScreen
 import com.serma.dionysus.ui.eventinfo.EventInfoScreen
 import com.serma.dionysus.ui.events.EventsScreen
+import com.serma.dionysus.ui.graph.GraphScreen
 import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
 
+@ExperimentalPagerApi
 @Composable
 fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
     val navController = rememberNavController()
@@ -57,7 +61,18 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                 composable(Events) {
                     EventsScreen(
                         openProfile = actions.profile,
-                        openEvent = {id -> navController.navigate("event/$id")},
+                        openEvent = { id -> navController.navigate("event/$id") },
+                        logout = { actions.logout },
+                        viewModel = hiltNavGraphViewModel(it)
+                    )
+                }
+                composable(
+                    Graph,
+                    arguments = listOf(navArgument("eventId") { defaultValue = "" })
+                ) {
+                    GraphScreen(
+                        openProfile = actions.profile,
+                        navigateBack = { navController.popBackStack() },
                         logout = { actions.logout },
                         viewModel = hiltNavGraphViewModel(it)
                     )
@@ -69,6 +84,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                     EventInfoScreen(
                         eventId = requireNotNull(it.arguments?.getString("eventId")),
                         openProfile = actions.profile,
+                        openGraph = { id -> navController.navigate("graph/$id") },
                         navigateBack = { navController.popBackStack() },
                         logout = { actions.logout },
                         viewModel = hiltNavGraphViewModel(it)

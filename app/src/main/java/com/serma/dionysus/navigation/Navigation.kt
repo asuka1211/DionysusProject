@@ -15,6 +15,7 @@ object Destinations {
     const val Login = "login"
     const val Registration = "registration"
     const val Events = "events"
+    const val Graph = "graph/{eventId}"
     const val Event = "event/{eventId}"
     const val Profile = "profile"
     const val Logout = "logout"
@@ -24,8 +25,6 @@ class Action(navController: NavController) {
     val login: () -> Unit = { navController.navigate(Login) }
     val splash: () -> Unit = { navController.navigate(Splash) }
     val events: () -> Unit = { navController.navigate(Events) }
-    val event: (String) -> Unit =
-        { id -> navController.navigate(Event.replace("{eventId}", id)) }
     val registration: () -> Unit = { navController.navigate(Registration) }
     val profile: () -> Unit = { navController.navigate(Profile) }
     val logout: () -> Unit = {

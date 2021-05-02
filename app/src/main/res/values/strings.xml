@@ -34,4 +34,7 @@
     <string name="screen_route_events">Мероприятия</string>
     <string name="screen_route_stats">Статистика</string>
     <string name="screen_route_tasks">Задачи</string>
+    <string name="graph_budget">Бюджет</string>
+    <string name="graph_status">Состояния</string>
+    <string name="open_graph">К статистике</string>
 </resources>
