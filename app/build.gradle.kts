@@ -11,13 +11,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidConfig.compileSdkVersion)
-    buildToolsVersion(AndroidConfig.buildToolsVersion)
+    compileSdk = AndroidConfig.compileSdkVersion
+    buildToolsVersion = AndroidConfig.buildToolsVersion
 
     defaultConfig {
-        applicationId(AndroidConfig.applicationId)
-        minSdkVersion(AndroidConfig.minSdkVersion)
-        targetSdkVersion(AndroidConfig.targetSdkVersion)
+        applicationId = AndroidConfig.applicationId
+        minSdk = AndroidConfig.minSdkVersion
+        targetSdk = AndroidConfig.targetSdkVersion
         versionCode = AndroidConfig.versionCode
         versionName = AndroidConfig.versionName
 
@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled(false)
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -81,4 +81,6 @@ dependencies {
     kapt(Libraries.daggerHiltKapt)
     implementation(Libraries.daggerHilt)
     implementation(Libraries.daggerHiltCompose)
+    implementation(Libraries.pager)
+    implementation(Libraries.pagerIndicators)
 }

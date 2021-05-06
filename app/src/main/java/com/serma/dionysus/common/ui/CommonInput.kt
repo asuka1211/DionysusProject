@@ -1,6 +1,8 @@
 package com.serma.dionysus.common.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,6 +13,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -21,18 +24,20 @@ import androidx.compose.ui.unit.dp
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.R
+import com.serma.dionysus.common.theme.SecondaryColor
 
 @Preview
 @Composable
 private fun CommonInputPreview() {
     DionysusTheme {
         Column {
-            CommonTextField(R.string.example) {}
+            //CommonTextField(R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
-            CommonTextFieldWithTitle(R.string.example, R.string.example, {})
+            CommonTextFieldWithTitle(R.string.example, R.string.example, ){}
             Spacer(modifier = Modifier.height(10.dp))
             CommonPasswordTextField(R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
+            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
             ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
         }
     }
@@ -41,18 +46,20 @@ private fun CommonInputPreview() {
 @Composable
 fun CommonTextField(
     @StringRes hintTextId: Int,
-    onValueChange: (String) -> Unit,
+    onValueChange: ((String) -> Unit)? = null,
+    text: String = "",
+    modifier: Modifier = Modifier
 ) {
-    val text = remember {
-        mutableStateOf("")
+    val textState = remember {
+        mutableStateOf(text)
     }
     TextField(
-        value = text.value,
+        value = textState.value,
         onValueChange = {
-            text.value = it
-            onValueChange(it)
+            textState.value = it
+            onValueChange?.invoke(it)
         },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
         colors = TextFieldDefaults.textFieldColors(
@@ -73,8 +80,9 @@ fun CommonTextField(
 fun CommonTextFieldWithTitle(
     @StringRes titleTextId: Int,
     @StringRes hintTextId: Int,
-    onValueChange: (String) -> Unit,
-    forPassword: Boolean = false
+    forPassword: Boolean = false,
+    text: String = "",
+    onValueChange: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -87,8 +95,51 @@ fun CommonTextFieldWithTitle(
         if (forPassword) {
             CommonPasswordTextField(hintTextId, onValueChange)
         } else {
-            CommonTextField(hintTextId, onValueChange)
+            CommonTextField(hintTextId, onValueChange, text)
         }
+    }
+}
+
+@Composable
+fun CommonTextWithTitleClickable(
+    @StringRes titleTextId: Int,
+    @StringRes hintTextId: Int,
+    text: String,
+    onClick: (() -> Unit)? = null,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            stringResource(titleTextId),
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        TextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onClick?.invoke() },
+            enabled = false,
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                backgroundColor = BackgroundInputColor,
+            ),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.subtitle2,
+            placeholder = {
+                if (text.isEmpty()) {
+                    Text(text = stringResource(id = hintTextId), color = Color.DarkGray)
+                } else {
+                    Text(text = text, color = Color.Black)
+                }
+            }
+        )
+
     }
 }
 
@@ -155,7 +206,6 @@ fun ReadOnlyTextFieldWithTitle(
             textStyle = MaterialTheme.typography.subtitle2,
             placeholder = {
                 Text(text = innerText, color = Color.Black)
-
             }
         )
     }

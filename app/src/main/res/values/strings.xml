@@ -29,6 +29,7 @@
     <string name="example">Example</string>
     <string name="logout">Выйти</string>
     <string name="manager">Организаторы</string>
+    <string name="reload">Обновить</string>
     <string name="profile">Профиль</string>
     <string name="profile_name">Имя</string>
     <string name="profile_name_hint">Введите имя</string>
@@ -45,4 +46,7 @@
     <string name="screen_route_events">Мероприятия</string>
     <string name="screen_route_stats">Статистика</string>
     <string name="screen_route_tasks">Задачи</string>
+    <string name="graph_budget">Бюджет</string>
+    <string name="graph_status">Состояния</string>
+    <string name="open_graph">К статистике</string>
 </resources>

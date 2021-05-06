@@ -16,9 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.LoadColor
 import com.serma.dionysus.common.theme.PrimaryColor
-import com.serma.dionysus.common.ui.CommonTopAppBar
-import com.serma.dionysus.common.ui.PagingItems
-import com.serma.dionysus.common.ui.pagingList
+import com.serma.dionysus.common.ui.*
 
 @Preview
 @Composable
@@ -59,29 +57,30 @@ fun EventsScreen(
     openProfile: () -> Unit,
     openEvent: (String) -> Unit,
     logout: () -> Unit,
-    eventsViewModel: EventsViewModel
+    viewModel: EventsViewModel
 ) {
     Scaffold(
-        topBar = { CommonTopAppBar(openProfile, logout) }
+        topBar = { CommonTopAppBar(openProfile = openProfile, logout = logout) }
     ) {
-        val state = eventsViewModel.uiState.collectAsState()
-        if (state.value.loading) {
-            Box(Modifier.fillMaxSize()) {
-                CircularProgressIndicator(Modifier.align(Alignment.Center))
+        val state = viewModel.uiState.collectAsState()
+        CommonBaseStateScreen(
+            state = state,
+            reload = {
+                viewModel.reload()
             }
-        } else {
+        ) {
             state.value.events?.let {
                 LazyColumn {
                     pagingList(
                         it,
                         state.value.loadingMore,
                         loadMore = {
-                            eventsViewModel.loadMore(
+                            viewModel.loadMore(
                                 state.value.pageNumber,
                                 state.value.pageSize
                             )
                         },
-                        itemContent = { pos, event ->
+                        itemContent = { _, event ->
                             EventCard(event, openEvent)
                         }) {
                         Box(Modifier.fillMaxWidth()) {
