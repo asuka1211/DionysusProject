@@ -1,6 +1,7 @@
 package com.serma.dionysus.ui.auth.login
 
 import androidx.lifecycle.viewModelScope
+import com.serma.dionysus.common.mvi.MviEffect
 import com.serma.dionysus.common.mvi.MviViewModel
 import com.serma.dionysus.ui.auth.login.mvi.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     reducer: LoginReducer,
     useCase: LoginUseCase
-) : MviViewModel<LoginEffect, LoginIntent, LoginViewState, LoginPartitionState>(
+) : MviViewModel<MviEffect, LoginIntent, LoginViewState, LoginPartitionState>(
     reducer, useCase
 ) {
 

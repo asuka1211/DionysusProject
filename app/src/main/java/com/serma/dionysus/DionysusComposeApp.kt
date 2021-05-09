@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.*
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.serma.auth.ui.registration.RegistrationScreen
+import com.serma.dionysus.ui.auth.registration.RegistrationScreen
+import com.serma.dionysus.auth.manager.SessionManager
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.navigation.Action
@@ -28,8 +29,14 @@ import com.serma.dionysus.ui.splash.SplashScreen
 
 @ExperimentalPagerApi
 @Composable
-fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
+fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionManager) {
     val navController = rememberNavController()
+    fun logout(){
+        navController.navigate(Login) {
+            popUpTo = 0
+        }
+        sessionManager.logout()
+    }
     val actions = remember(navController) { Action(navController) }
     DionysusTheme {
         Surface(modifier = Modifier.background(BackgroundColor)) {
@@ -46,7 +53,11 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                 }
                 composable(Login) {
                     LoginScreen(
-                        navigateSuccess = actions.events,
+                        navigateSuccess = {
+                            navController.navigate(Events) {
+                                popUpTo = 0
+                            }
+                        },
                         navigateRegistration = actions.registration,
                         loginViewModel = hiltNavGraphViewModel(it)
                     )
@@ -62,7 +73,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                     EventsScreen(
                         openProfile = actions.profile,
                         openEvent = { id -> navController.navigate("event/$id") },
-                        logout = { actions.logout },
+                        logout = { logout() },
                         viewModel = hiltNavGraphViewModel(it)
                     )
                 }
@@ -73,7 +84,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                     GraphScreen(
                         openProfile = actions.profile,
                         navigateBack = { navController.popBackStack() },
-                        logout = { actions.logout },
+                        logout = { logout() },
                         viewModel = hiltNavGraphViewModel(it)
                     )
                 }
@@ -86,7 +97,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                         openProfile = actions.profile,
                         openGraph = { id -> navController.navigate("graph/$id") },
                         navigateBack = { navController.popBackStack() },
-                        logout = { actions.logout },
+                        logout = { logout() },
                         viewModel = hiltNavGraphViewModel(it)
                     )
                 }
@@ -94,7 +105,7 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker) {
                     ProfileScreen(
                         openDatePicker = openDatePicker,
                         viewModel = hiltNavGraphViewModel(it),
-                        logout = { actions.logout },
+                        logout = { logout() },
                         navigateBack = { navController.popBackStack() },
                     )
                 }

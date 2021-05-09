@@ -15,9 +15,9 @@ class ProfileInteractor @Inject constructor() {
 
     private var localMockData = ProfileData(
         "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg",
-        "Тодд Говард",
+        "Олег Тинькофф",
         "12-11-1999",
-        "Бесезда",
+        "Люблю произвдить пельмени",
     )
 
     suspend fun load(): Flow<Result<ProfileData>> {
