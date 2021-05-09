@@ -157,7 +157,7 @@ fun CommonTopAppBar(
 
             DropdownMenu(
                 expanded = expanded.value,
-                onDismissRequest = { expanded.value = true }
+                onDismissRequest = { expanded.value = false }
             ) {
                 openProfile?.let {
                     DropdownMenuItem(onClick = openProfile) {

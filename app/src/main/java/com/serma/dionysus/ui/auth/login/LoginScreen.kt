@@ -103,7 +103,7 @@ fun LoginScreen(
                         textId = R.string.auth_login_btn,
                         onClick = {
                             loginData.value.apply {
-                                if (username.isEmpty() || username.isEmpty()) {
+                                if (username.isEmpty() || password.isEmpty()) {
                                     snackbarCoroutineScope.launch {
                                         scaffoldState.snackbarHostState.showSnackbar(fillFieldString)
                                     }
