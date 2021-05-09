@@ -38,10 +38,6 @@ import com.serma.dionysus.common.theme.DionysusTheme
 @Preview
 @Composable
 fun PreviewCommon() {
-//    PersonItem(
-//        "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg",
-//        "лев ебать"
-//    )
     DionysusTheme {
         BrandLogo()
         CommonErrorDialog("Ошибка 111011 Время переустанавливать шиндовс") {}
@@ -128,7 +124,7 @@ fun CommonTopAppBar(
 
             DropdownMenu(
                 expanded = expanded.value,
-                onDismissRequest = { expanded.value = true }
+                onDismissRequest = { expanded.value = false }
             ) {
                 openProfile?.let {
                     DropdownMenuItem(onClick = openProfile) {

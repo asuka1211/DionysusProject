@@ -34,14 +34,6 @@ private val color = Brush.horizontalGradient(listOf(Color(0xFF432DD4), Color(0xF
 @Composable
 @Preview
 fun ProfileScreenPreview() {
-    //   ProfileScreen({}
-//        ProfileData(
-//            "https://lh3.googleusercontent.com/proxy/XtFXriM2QoI-FZaFGc_pwO13_TbmBUl0d4ZTcSmyTMTpnjglEDFSgru8qoI0oJqmEmfKNIYiwCXsTKxp3Ns90T1rL1E",
-//            "Тодд Говард",
-//            "12-11-1999",
-//            "Бесезда",
-//        )
-//    )
 }
 
 @Composable

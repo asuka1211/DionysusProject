@@ -105,7 +105,7 @@ fun RegistrationScreen(
                         textId = R.string.auth_registration_btn,
                         onClick = {
                             authData.value.apply {
-                                if (username.isEmpty() || username.isEmpty()) {
+                                if (username.isEmpty() || password.isEmpty()) {
                                     snackbarCoroutineScope.launch {
                                         scaffoldState.snackbarHostState.showSnackbar(fillFieldString)
                                     }
