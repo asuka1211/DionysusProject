@@ -27,6 +27,7 @@ import com.serma.dionysus.ui.graph.GraphScreen
 import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
 
+@ExperimentalStdlibApi
 @ExperimentalPagerApi
 @Composable
 fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionManager) {
@@ -46,7 +47,11 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionMa
             ) {
                 composable(Splash) {
                     SplashScreen(
-                        navigateForward = actions.events,
+                        navigateForward = {
+                            navController.navigate(Events) {
+                                popUpTo = 0
+                            }
+                        },
                         navigateRegistration = actions.registration,
                         viewModel = hiltNavGraphViewModel(it)
                     )

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 inline fun <T> LazyListScope.pagingList(
     item: PagingItems<T>,
     loading: Boolean,
+    canLoading: Boolean,
     crossinline loadMore: () -> Unit,
     noinline key: ((index: Int, item: T) -> Any)? = null,
     crossinline itemContent: @Composable LazyItemScope.(index: Int, item: T) -> Unit,
@@ -16,7 +17,7 @@ inline fun <T> LazyListScope.pagingList(
 ) {
     var doubleCheck = loading
     this.itemsIndexed(item.items, key) { pos, event ->
-        if (pos == item.lastPos && !loading && !doubleCheck) {
+        if (pos == item.lastPos && !loading && !doubleCheck && canLoading) {
             doubleCheck = true
             loadMore()
         }

@@ -13,9 +13,16 @@ import javax.inject.Singleton
 @Singleton
 class EventsInteractor @Inject constructor() {
 
-    suspend fun load(pageNumber: Int, pageSize: Int = 50): Flow<Result<MockEvent>> {
+    @ExperimentalStdlibApi
+    suspend fun load(name: String, pageNumber: Int, pageSize: Int = 50): Flow<Result<MockEvent>> {
         return flow {
-            emit(Result.Success(MockEvent(getMock(pageNumber))))
+            emit(Result.Success(MockEvent(getMock(pageNumber).filter {
+                if (name.isNotEmpty()) {
+                    it.name.lowercase().contains(name.lowercase())
+                } else {
+                    true
+                }
+            }, name.isEmpty())))
         }.flowOn(Dispatchers.IO)
     }
 
@@ -52,4 +59,4 @@ class EventsInteractor @Inject constructor() {
 
 }
 
-data class MockEvent(val list: List<EventData>)
+data class MockEvent(val list: List<EventData>, val canLoading: Boolean)
