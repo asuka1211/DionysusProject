@@ -13,9 +13,6 @@
     <string name="auth_login_need_account">Нету аккаунта?</string>
     <string name="auth_login_have_account">Есть аккаунт?</string>
     <string name="auth_registration_btn">Зарегистрироваться</string>
-    <string name="auth_email">Введите Ваш E-mail</string>
-    <string name="auth_hint_email">E-mail</string>
-    <string name="completed">Выполнено</string>
     <string name="event_description">Описание мероприятия</string>
     <string name="tag">Тэг</string>
     <string name="task_author">Автор задачи</string>
@@ -54,4 +51,8 @@
     <string name="graph_budget">Бюджет</string>
     <string name="graph_status">Состояния</string>
     <string name="open_graph">К статистике</string>
+    <string name="wrong_credentials">Неверные данные</string>
+    <string name="empty_field">Заполните поля</string>
+    <string name="all_budget">Весь бюджет: %1$s</string>
+    <string name="search_event">Найти мероприятие</string>
 </resources>

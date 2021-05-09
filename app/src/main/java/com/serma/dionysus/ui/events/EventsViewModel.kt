@@ -3,13 +3,12 @@ package com.serma.dionysus.ui.events
 import androidx.lifecycle.viewModelScope
 import com.serma.dionysus.common.mvi.MviEffect
 import com.serma.dionysus.common.mvi.MviViewModel
-import com.serma.dionysus.ui.auth.login.mvi.LoginIntent
-import com.serma.dionysus.ui.auth.login.mvi.LoginViewState
 import com.serma.dionysus.ui.events.mvi.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalStdlibApi
 @HiltViewModel
 class EventsViewModel @Inject constructor(
     reducer: EventsReducer,
@@ -21,24 +20,24 @@ class EventsViewModel @Inject constructor(
     override fun createInitialState() = EventsViewState()
 
     init {
-        load()
+        load("")
     }
 
-    fun loadMore(pageNumber: Int, pageSize: Int = 50) {
+    fun loadMore(name: String, pageNumber: Int, pageSize: Int = 50) {
         viewModelScope.launch {
-            sendIntent(EventsIntent.LoadingMore(pageNumber, pageSize))
+            sendIntent(EventsIntent.LoadingMore(name, pageNumber, pageSize))
         }
     }
 
-    private fun load(pageSize: Int = 50) {
+    private fun load(name: String, pageSize: Int = 50) {
         viewModelScope.launch {
-            sendIntent(EventsIntent.Loading(pageSize))
+            sendIntent(EventsIntent.Loading(name, pageSize))
         }
     }
 
-    fun reload() {
+    fun reload(name: String) {
         viewModelScope.launch {
-            sendIntent(EventsIntent.Reload)
+            sendIntent(EventsIntent.Reload(name))
         }
     }
 }

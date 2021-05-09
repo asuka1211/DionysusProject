@@ -2,9 +2,7 @@ package com.serma.dionysus.ui.graph
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,12 +24,16 @@ fun GraphScreen(
     navigateBack: () -> Unit,
     viewModel: GraphViewModel
 ) {
-    val pagerState = rememberPagerState(pageCount = 2)
+    val pagerState = rememberPagerState(pageCount = 2, initialPage = 0)
 
     val tabs = listOf(
         GraphTabs(R.string.graph_budget, 0, GraphTabsType.BUDGET),
         GraphTabs(R.string.graph_status, 1, GraphTabsType.STATUS)
     )
+
+    var firstLoad = remember {
+        mutableStateOf(true)
+    }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -72,6 +74,10 @@ fun GraphScreen(
                 }
                 SpacerRow(height = 16)
                 HorizontalPager(state = pagerState) { page ->
+                    if (firstLoad.value) {
+                        firstLoad.value = false
+                        return@HorizontalPager
+                    }
                     when (page) {
                         0 -> BudgetScreen(viewModel)
                         1 -> StatusScreen(viewModel)
@@ -95,7 +101,14 @@ fun BudgetScreen(viewModel: GraphViewModel) {
         }
     ) {
         state.value.dataBudget?.let {
-            Graph(list = it)
+            Column {
+                Text(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.all_budget, it.allBudget)
+                )
+                SpacerRow(height = 16)
+                GraphBudget(list = it.list)
+            }
         }
     }
 }
@@ -113,13 +126,13 @@ fun StatusScreen(viewModel: GraphViewModel) {
         }
     ) {
         state.value.dataStatus?.let {
-            Graph(list = it)
+            GraphStatus(list = it)
         }
     }
 }
 
 @Composable
-fun Graph(list: List<GraphItem>) {
+fun GraphStatus(list: List<GraphItem>) {
     InfoForGraph(
         GraphData(list),
         Modifier
@@ -130,6 +143,20 @@ fun Graph(list: List<GraphItem>) {
         Text(text = "${it.name} ${it.progress}%")
     }
 }
+
+@Composable
+fun GraphBudget(list: List<GraphItemBudget>) {
+    InfoForGraph(
+        GraphData(list),
+        Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxSize(),
+        donutSize = 200.dp
+    ) {
+        Text(text = "${it.name} ${it.budget} ${it.progress}%")
+    }
+}
+
 
 data class GraphTabs(
     val textId: Int,
@@ -146,3 +173,12 @@ data class GraphItem(
     override val color: Color,
     val name: String
 ) : SliceData
+
+data class GraphItemBudget(
+    override val progress: Float,
+    override val color: Color,
+    val name: String,
+    val budget: String
+) : SliceData
+
+data class BudgetData(val allBudget: String, val list: List<GraphItemBudget>)

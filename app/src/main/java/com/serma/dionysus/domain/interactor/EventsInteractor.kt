@@ -13,86 +13,50 @@ import javax.inject.Singleton
 @Singleton
 class EventsInteractor @Inject constructor() {
 
-    suspend fun load(pageNumber: Int, pageSize: Int = 50): Flow<Result<MockEvent>> {
+    @ExperimentalStdlibApi
+    suspend fun load(name: String, pageNumber: Int, pageSize: Int = 50): Flow<Result<MockEvent>> {
         return flow {
-            emit(Result.Success(MockEvent(getMock(pageNumber))))
+            emit(Result.Success(MockEvent(getMock(pageNumber).filter {
+                if (name.isNotEmpty()) {
+                    it.name.lowercase().contains(name.lowercase())
+                } else {
+                    true
+                }
+            }, name.isEmpty())))
         }.flowOn(Dispatchers.IO)
     }
 
     private suspend fun getMock(pageNumber: Int): List<EventData> {
         delay(1000L)
-        return if (pageNumber == 0) {
-            generateDataFirst()
-        } else {
-            generateDataSecond()
-        }
+        return generateDataFirst()
     }
 
     private fun generateDataFirst(): List<EventData> {
         return listOf(
             EventData(
-                "Asd",
-                "Пивная",
+                "11",
+                "ул. Дегтярева, 2, Волгоград, Волгоградская обл., 400006",
                 "12-11-2021",
-                "Насвай пати",
+                "Что? Где? Когда?",
                 0.5f
             ),
             EventData(
-                "Asd",
-                "Снюсовая",
+                "12",
+                "ул. Огарева, 7, Волгоград, Волгоградская обл., 400074",
                 "21-01-2022",
-                "День выборов",
+                "Встреча с друзьями",
                 1f
             ),
             EventData(
-                "Asd",
-                "Васильсурская 1",
+                "13",
+                "ул. Васильсурская, 1, Волгоград, Волгоградская обл., 400012",
                 "16-11-2022",
-                "День рождение",
+                "Празднование дня рождения",
                 0f
-            ),
-            EventData(
-                "Asd",
-                "Васильсурasdasdsadsadsa sad asdsa dsad asd asd sad sad asd aская 1",
-                "16-11-2022",
-                "Денsadasdsad asda sdasd asd asda sdasdasdasdsadaь рdsadasdоaasждение",
-                0.3f
             )
         )
     }
 
-    private fun generateDataSecond(): List<EventData> {
-        return listOf(
-            EventData(
-                "Asd",
-                "1",
-                "12-11-2021",
-                "Наadsaсвай пати",
-                0.5f
-            ),
-            EventData(
-                "Asd",
-                "2",
-                "21-01-2022",
-                "Деньas dsad  выборов",
-                1f
-            ),
-            EventData(
-                "Asd",
-                "3 1",
-                "16-11-2022",
-                "День рd ada sождение",
-                0f
-            ),
-            EventData(
-                "Asd",
-                "Васильсурasdasdsadsadsa sad asdsa dsad asd asd sad sad asd aская 1",
-                "16-11-2022",
-                "Денsadasdsad assad asd asdda sdasd asd asda sdasdasdasdsadaь рdsadasdоaasждение",
-                0.3f
-            )
-        )
-    }
 }
 
-data class MockEvent(val list: List<EventData>)
+data class MockEvent(val list: List<EventData>, val canLoading: Boolean)

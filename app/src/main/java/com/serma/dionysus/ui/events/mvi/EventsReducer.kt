@@ -2,7 +2,6 @@ package com.serma.dionysus.ui.events.mvi
 
 import com.serma.dionysus.common.mvi.MviReducer
 import com.serma.dionysus.common.ui.PagingItems
-import com.serma.dionysus.ui.events.EventData
 import javax.inject.Inject
 
 class EventsReducer @Inject constructor() : MviReducer<EventsViewState, EventsPartitionState> {
@@ -16,7 +15,10 @@ class EventsReducer @Inject constructor() : MviReducer<EventsViewState, EventsPa
             EventsPartitionState.Loading -> reduceLoading(lastViewState)
             is EventsPartitionState.LoadingData -> reduceLoadingData(lastViewState, partitionState)
             EventsPartitionState.LoadingMore -> reduceLoadingMore(lastViewState)
-            is EventsPartitionState.LoadingMoreData -> reduceLoadingMoreData(lastViewState, partitionState)
+            is EventsPartitionState.LoadingMoreData -> reduceLoadingMoreData(
+                lastViewState,
+                partitionState
+            )
         }
     }
 
@@ -27,7 +29,7 @@ class EventsReducer @Inject constructor() : MviReducer<EventsViewState, EventsPa
         return lastViewState.copy(error = Throwable(state.message), loading = false)
     }
 
-    private fun reduceLoading(lastViewState: EventsViewState,): EventsViewState {
+    private fun reduceLoading(lastViewState: EventsViewState): EventsViewState {
         return lastViewState.copy(error = null, loading = true)
     }
 
@@ -35,12 +37,15 @@ class EventsReducer @Inject constructor() : MviReducer<EventsViewState, EventsPa
         lastViewState: EventsViewState,
         state: EventsPartitionState.LoadingData
     ): EventsViewState {
-        val items = lastViewState.events?.items ?: listOf<EventData>() + state.items
+        val items = state.items
         return lastViewState.copy(
             error = null,
             loading = false,
             events = PagingItems(items.size - 1, items),
-            pageNumber = lastViewState.pageNumber + 1
+            pageNumber = lastViewState.pageNumber + 1,
+            searchText = state.name,
+            loadingMore = false,
+            canLoading = state.canLoading
         )
     }
 
@@ -59,7 +64,9 @@ class EventsReducer @Inject constructor() : MviReducer<EventsViewState, EventsPa
             error = null,
             loadingMore = false,
             events = PagingItems(items.size - 1, items),
-            pageNumber = lastViewState.pageNumber + 1
+            pageNumber = lastViewState.pageNumber + 1,
+            searchText = state.name,
+            canLoading = state.canLoading
         )
     }
 }

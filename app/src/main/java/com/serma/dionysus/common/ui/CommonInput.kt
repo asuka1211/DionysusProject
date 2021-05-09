@@ -9,7 +9,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +51,8 @@ private fun CommonInputPreview() {
             val listTestData = listOf(testData, testData)
             TaskCardWithParent(testData)
             TaskCardsHolder(R.string.in_discussion, listTestData)
+            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
+            ReadOnlyTextFieldWithTitle(R.string.auth_hint_login, "Test")
         }
     }
 }
