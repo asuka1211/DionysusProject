@@ -5,7 +5,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -38,13 +44,36 @@ import com.serma.dionysus.common.theme.DionysusTheme
 @Preview
 @Composable
 fun PreviewCommon() {
-//    PersonItem(
-//        "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg",
-//        "лев ебать"
-//    )
     DionysusTheme {
-        BrandLogo()
-        CommonErrorDialog("Ошибка 111011 Время переустанавливать шиндовс") {}
+
+        val testData = PersonData(
+            "Максим Яковлев",
+            "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
+        )
+        val listTestData = listOf(testData, testData)
+
+        Column {
+//            PersonItem(
+//                "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg",
+//                "лев ебать"
+//            )
+//            Spacer(modifier = Modifier.height(16.dp))
+//            UserCard(
+//                "лев ебать",
+//                "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg"
+//            )
+
+            UserCardsHolderWithTitle(
+                titleTextId = R.string.add_author,
+                data = listTestData
+            )
+
+            AddingUserCardsWithTitle(
+                titleTextId = R.string.add_author,
+                buttonTextId = R.string.add_author,
+                data = listTestData
+            )
+        }
     }
 }
 
@@ -145,7 +174,7 @@ fun CommonTopAppBar(
 }
 
 @Composable
-fun UserNameAndAvatar(name: String, url: String) {
+fun UserCard(name: String, url: String) {
     Card(shape = RoundedCornerShape(16.dp), elevation = 0.dp) {
         Row(
             modifier = Modifier
@@ -164,7 +193,7 @@ fun UserNameAndAvatar(name: String, url: String) {
 
                     apply(options)
                 },
-                contentDescription = null,
+                contentDescription = "null",
                 loading = {
                     Box(Modifier.matchParentSize()) {
                         CircularProgressIndicator(Modifier.align(Alignment.Center))
@@ -189,31 +218,69 @@ fun UserNameAndAvatar(name: String, url: String) {
 }
 
 @Composable
-fun UserCardsHolder(data: List<PersonData>) {
-    Card(shape = RoundedCornerShape(16.dp)) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = BackgroundInputColor)
-        ) {
-            data.forEach { person ->
-                UserNameAndAvatar(person.name, person.avatarUrl)
+fun AddingTagWithTitle(@StringRes titleTextId: Int, @StringRes buttonTextId: Int, tags: List<String>) {
+    Column{
+        Column {
+            Text(
+                stringResource(titleTextId),
+                modifier = Modifier.padding(vertical = 8.dp),
+                style = MaterialTheme.typography.subtitle2,
+            )
+            Card(shape = RoundedCornerShape(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = BackgroundInputColor)
+                ) {
+                    tags.forEach { tag ->
+                        ReadOnlyTextField(tag)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun UserCardsHolderWithTitle(@StringRes titleTextId: Int, data: List<PersonData>) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+fun AddingUserCardsWithTitle(@StringRes titleTextId: Int, @StringRes buttonTextId: Int, data: List<PersonData>) {
+    Column{
+        UserCardsHolderWithTitle(titleTextId, data)
+        AddingButton(buttonTextId = buttonTextId, BackgroundInputColor)
+    }
+}
+
+@Composable
+fun UserCardWithTitle(@StringRes titleTextId: Int, person: PersonData) {
+    Column {
         Text(
             stringResource(titleTextId),
             modifier = Modifier.padding(vertical = 8.dp),
             style = MaterialTheme.typography.subtitle2,
         )
-        UserCardsHolder(data)
+        UserCard(person.name, person.avatarUrl)
+    }
+}
+
+
+@Composable
+fun UserCardsHolderWithTitle(@StringRes titleTextId: Int, data: List<PersonData>) {
+    Column {
+        Text(
+            stringResource(titleTextId),
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        Card(shape = RoundedCornerShape(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = BackgroundInputColor)
+            ) {
+                data.forEach { person ->
+                    UserCard(person.name, person.avatarUrl)
+                }
+            }
+        }
     }
 }
 
