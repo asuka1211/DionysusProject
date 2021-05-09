@@ -9,9 +9,30 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.serma.dionysus.R
 import com.serma.dionysus.common.ui.*
+
+@Preview
+@Composable
+fun EventInfoScreenPreview() {
+    val testData = PersonData(
+        "Максим Яковлев",
+        "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
+    )
+    val listTestData = listOf(testData, testData, testData, testData)
+
+    val data = EventInfoData(
+        "Сдерживание грузина",
+        "Завтра",
+        "Сдерживание мощного, не молодого грузина посредством применения специально оборудованных водометов",
+        listTestData,
+        "Политех",
+        "300$"
+    )
+//    EventInfoScreen(data)
+}
 
 @Composable
 fun EventInfoScreen(
@@ -80,6 +101,7 @@ fun EventInfoScreen(
                                 .height(56.dp),
                             textId = R.string.open_graph,
                             onClick = { openGraph(eventId) })
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }

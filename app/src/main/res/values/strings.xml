@@ -3,6 +3,7 @@
     <string name="budget">Бюджет</string>
     <string name="add_author">Добавить автора</string>
     <string name="add_responsible">Добавить ответственного</string>
+    <string name="add_task">Добавить задачу</string>
     <string name="add_tag">Добавить тэг</string>
     <string name="auth_login">Логин</string>
     <string name="auth_password">Пароль</string>
@@ -14,9 +15,10 @@
     <string name="auth_registration_btn">Зарегистрироваться</string>
     <string name="auth_email">Введите Ваш E-mail</string>
     <string name="auth_hint_email">E-mail</string>
+    <string name="completed">Выполнено</string>
     <string name="event_description">Описание мероприятия</string>
     <string name="tag">Тэг</string>
-    <string name="task_author">Название задачи</string>
+    <string name="task_author">Автор задачи</string>
     <string name="task_name">Название задачи</string>
     <string name="task_description">Описание задачи</string>
     <string name="task_deadline">Дедлайн задачи</string>
@@ -27,8 +29,11 @@
     <string name="event_date">Дата мероприятия</string>
     <string name="event_location">Место проведения</string>
     <string name="example">Example</string>
+    <string name="in_discussion">В обсуждении</string>
+    <string name="importance">Важность</string>
     <string name="logout">Выйти</string>
     <string name="manager">Организаторы</string>
+    <string name="name">Название</string>
     <string name="reload">Обновить</string>
     <string name="profile">Профиль</string>
     <string name="profile_name">Имя</string>
