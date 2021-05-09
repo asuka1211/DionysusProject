@@ -24,33 +24,27 @@ import androidx.compose.ui.unit.dp
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.R
-import com.serma.dionysus.common.theme.SecondaryColor
 import com.serma.dionysus.ui.tasklist.TaskData
 
 @Preview
 @Composable
 private fun CommonInputPreview() {
+    val testData = TaskData(
+        "Привер тэга",
+        "Пример имени",
+        "Сегодня",
+        "",
+        0
+    )
+    val listTestData = listOf(testData, testData)
     DionysusTheme {
         Column {
-            //CommonTextField(R.string.example) {}
+            CommonTextField(R.string.example)
             Spacer(modifier = Modifier.height(10.dp))
             CommonTextFieldWithTitle(R.string.example, R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
-//            CommonPasswordTextField(R.string.example) {}
-//            Spacer(modifier = Modifier.height(10.dp))
-//            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
-//            ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
-//            Spacer(modifier = Modifier.height(10.dp))
-//            DropDownMenu(2)
-            val testData = TaskData(
-                "Тупое говно",
-                "Тупого говна",
-                "Вчера",
-                "Родительская задача"
-            )
-            val listTestData = listOf(testData, testData)
             TaskCardWithParent(testData)
-            TaskCardsHolder(R.string.in_discussion, listTestData)
+            TaskCardsHolder(R.string.in_discussion, listTestData, 2)
             CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
             ReadOnlyTextFieldWithTitle(R.string.auth_hint_login, "Test")
         }
@@ -296,46 +290,51 @@ fun TaskCardWithParent(task: TaskData) {
 }
 
 @Composable
-fun TaskCardsHolder(@StringRes titleTextId: Int, tasks: List<TaskData>) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(BackgroundInputColor)
-            .padding(8.dp)
-    ) {
-        Row(modifier = Modifier
-            .fillMaxWidth()) {
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                stringResource(titleTextId),
-                modifier = Modifier.padding(vertical = 8.dp),
-                style = MaterialTheme.typography.subtitle1,
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Box(
+fun TaskCardsHolder(@StringRes titleTextId: Int, tasks: List<TaskData>, pageNum: Int) {
+    tasks.forEachIndexed { index, task ->
+        if (task.pageNum != pageNum) return@forEachIndexed
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(10.dp))
+                .background(BackgroundInputColor)
+                .padding(8.dp)
+        ) {
+            Row(
                 modifier = Modifier
-                    .size(44.dp, 18.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.Green)
-                    .align(Alignment.CenterVertically)
-                    .padding(horizontal = 20.dp)
-            )
-        }
-        tasks.forEach { task ->
+                    .fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    stringResource(titleTextId),
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    style = MaterialTheme.typography.subtitle1,
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Box(
+                    modifier = Modifier
+                        .size(44.dp, 18.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.Green)
+                        .align(Alignment.CenterVertically)
+                        .padding(horizontal = 20.dp)
+                )
+            }
             if (task.parentTaskName == "") TaskCard(task)
             else TaskCardWithParent(task)
-            Spacer(modifier = Modifier.height(8.dp))
         }
-
-
-        AddingButton(buttonTextId = R.string.add_task, Color.White)
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
 @Composable
 fun DropDownMenu(selectionNumber: Int) {
-    val suggestions = listOf("Срочная задача", "Средная срочность", "Несрочная задача")
+    val suggestions = listOf(
+        stringResource(R.string.urgent_task),
+        stringResource(R.string.average_urgency_task),
+        stringResource(R.string.non_urgent_task)
+    )
+
     val initialSelectedText = if (selectionNumber == 0) ""
     else suggestions[selectionNumber - 1]
 
