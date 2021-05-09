@@ -5,10 +5,15 @@ import com.serma.dionysus.ui.events.EventData
 
 sealed class EventsPartitionState : MviPartitionState {
     object Loading : EventsPartitionState()
-    data class LoadingData(val items: List<EventData>) : EventsPartitionState()
+    data class LoadingData(val name: String, val items: List<EventData>, val canLoading: Boolean) :
+        EventsPartitionState()
 
     object LoadingMore : EventsPartitionState()
-    data class LoadingMoreData(val items: List<EventData>) : EventsPartitionState()
+    data class LoadingMoreData(
+        val name: String,
+        val items: List<EventData>,
+        val canLoading: Boolean
+    ) : EventsPartitionState()
 
     data class Error(val message: String) : EventsPartitionState()
 }
