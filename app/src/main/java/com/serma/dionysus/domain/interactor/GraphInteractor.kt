@@ -1,6 +1,8 @@
 package com.serma.dionysus.domain.interactor
 
+import com.serma.dionysus.ui.graph.BudgetData
 import com.serma.dionysus.ui.graph.GraphItem
+import com.serma.dionysus.ui.graph.GraphItemBudget
 import com.serma.dionysus.utils.ColorHelper
 import com.serma.dionysus.utils.Result
 import kotlinx.coroutines.Dispatchers
@@ -14,13 +16,10 @@ import javax.inject.Singleton
 @Singleton
 class GraphInteractor @Inject constructor() {
 
+    private val allBudget = "40000 ₽"
+
     private val statusHelper = ColorHelper()
     private val status = listOf(
-        GraphItem(
-            20f,
-            statusHelper.getColor(),
-            "Выполнено",
-        ),
         GraphItem(
             40f,
             statusHelper.getColor(),
@@ -35,25 +34,39 @@ class GraphInteractor @Inject constructor() {
             30f,
             statusHelper.getColor(),
             "В работе",
+        ),
+        GraphItem(
+            20f,
+            statusHelper.getColor(),
+            "Выполнено",
         )
     )
 
     private val budgetHelper = ColorHelper()
     private val budget = listOf(
-        GraphItem(
-            70f,
+        GraphItemBudget(
+            45f,
             budgetHelper.getColor(),
-            "Покупка снюса"
+            "Покупка еды",
+            "18000 ₽"
         ),
-        GraphItem(
+        GraphItemBudget(
             15f,
             budgetHelper.getColor(),
-            "Тодд Говард",
+            "Оплата за аренду помещения",
+            "6000 ₽"
         ),
-        GraphItem(
+        GraphItemBudget(
+            25f,
+            budgetHelper.getColor(),
+            "Покупка подарков",
+            "10000 ₽"
+        ),
+        GraphItemBudget(
             15f,
             budgetHelper.getColor(),
             "Прочее",
+            "6000 ₽"
         )
     )
 
@@ -64,10 +77,10 @@ class GraphInteractor @Inject constructor() {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun loadBudget(): Flow<Result<List<GraphItem>>> {
+    suspend fun loadBudget(): Flow<Result<BudgetData>> {
         return flow {
             delay(1000L)
-            emit(Result.Success(budget))
+            emit(Result.Success(BudgetData(allBudget,budget)))
         }.flowOn(Dispatchers.IO)
     }
 }

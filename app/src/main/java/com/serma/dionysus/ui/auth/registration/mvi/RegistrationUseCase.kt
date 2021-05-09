@@ -1,4 +1,4 @@
-package com.serma.dionysus.ui.auth.login.mvi
+package com.serma.dionysus.ui.auth.registration.mvi
 
 import com.serma.dionysus.auth.manager.SessionManager
 import com.serma.dionysus.common.mvi.MviEffect
@@ -10,38 +10,38 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(
+class RegistrationUseCase @Inject constructor(
     private val interactor: AuthInteractor,
     private val sessionManager: SessionManager
-) : MviUseCase<LoginPartitionState, LoginIntent, MviEffect>() {
+) : MviUseCase<RegistrationPartitionState, RegistrationIntent, MviEffect>() {
 
-    override suspend fun resolve(intent: LoginIntent): Flow<LoginPartitionState> {
+    override suspend fun resolve(intent: RegistrationIntent): Flow<RegistrationPartitionState> {
         return when (intent) {
-            is LoginIntent.Login -> loginUseCase(intent)
+            is RegistrationIntent.Registration -> registrationUseCase(intent)
         }
     }
 
-    private suspend fun loginUseCase(intent: LoginIntent.Login): Flow<LoginPartitionState> {
-        return interactor.login(intent.email, intent.password).map { result ->
+    private suspend fun registrationUseCase(intent: RegistrationIntent.Registration): Flow<RegistrationPartitionState> {
+        return interactor.registration(intent.email, intent.password).map { result ->
             when (result) {
                 is Result.Success -> {
                     if (result.data.wrongCredentials) {
-                        LoginPartitionState.WrongCredentials
+                        RegistrationPartitionState.WrongCredentials
                     } else {
                         sessionManager.saveTokenData(
                             result.data.token,
                             result.data.refreshToken,
                             result.data.expiresTime
                         )
-                        LoginPartitionState.Success
+                        RegistrationPartitionState.Success
                     }
                 }
                 is Result.Error -> {
-                    LoginPartitionState.Error(result.message)
+                    RegistrationPartitionState.Error(result.message)
                 }
             }
         }.onStart {
-            emit(LoginPartitionState.Loading)
+            emit(RegistrationPartitionState.Loading)
         }
     }
 }

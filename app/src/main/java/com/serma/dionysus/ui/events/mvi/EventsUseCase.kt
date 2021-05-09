@@ -3,11 +3,9 @@ package com.serma.dionysus.ui.events.mvi
 import com.serma.dionysus.common.mvi.MviEffect
 import com.serma.dionysus.common.mvi.MviUseCase
 import com.serma.dionysus.domain.interactor.EventsInteractor
-import com.serma.dionysus.domain.interactor.LoginInteractor
 import com.serma.dionysus.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onErrorReturn
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 

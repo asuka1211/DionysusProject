@@ -38,7 +38,7 @@ private fun CommonInputPreview() {
             CommonPasswordTextField(R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
             CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
-            ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
+            ReadOnlyTextFieldWithTitle(R.string.auth_hint_login, "Test")
         }
     }
 }

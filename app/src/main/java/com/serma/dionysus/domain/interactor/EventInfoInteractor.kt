@@ -14,19 +14,23 @@ import javax.inject.Singleton
 @Singleton
 class EventInfoInteractor @Inject constructor() {
 
-    private val testData = PersonData(
+    private val testData1 = PersonData(
         "Максим Яковлев",
         "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
     )
-    private val listTestData = listOf(testData, testData, testData, testData)
+    private val testData2 = PersonData(
+        "Олег Тинькофф",
+        "https://interesnyefakty.org/wp-content/uploads/oleg-tinkov.jpg"
+    )
+    private val listTestData = listOf(testData1, testData2)
 
     private val data = EventInfoData(
-        "Сдерживание грузина",
-        "Завтра",
-        "Сдерживание мощного, не молодого грузина посредством применения специально оборудованных водометов",
+        "Празднование дня рождения",
+        "16-11-2022",
+        "Празднование дня рождения Александра",
         listTestData,
-        "Политех",
-        "300$"
+        "ул. Васильсурская, 1, Волгоград, Волгоградская обл., 400012",
+        "40000 ₽"
     )
 
     suspend fun load(eventId: String): Flow<Result<EventInfoData>> {
