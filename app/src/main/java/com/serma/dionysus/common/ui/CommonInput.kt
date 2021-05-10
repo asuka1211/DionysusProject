@@ -1,19 +1,16 @@
 package com.serma.dionysus.common.ui
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -21,10 +18,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.serma.dionysus.R
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
-import com.serma.dionysus.R
-import com.serma.dionysus.common.theme.SecondaryColor
 
 @Preview
 @Composable
@@ -33,10 +29,14 @@ private fun CommonInputPreview() {
         Column {
             //CommonTextField(R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
-            CommonTextFieldWithTitle(R.string.example, R.string.example, ){}
+            CommonTextFieldWithTitle(R.string.example, R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
-            CommonPasswordTextField(R.string.example) {}
-            Spacer(modifier = Modifier.height(10.dp))
+//            CommonPasswordTextField(R.string.example) {}
+//            Spacer(modifier = Modifier.height(10.dp))
+//            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
+//            ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
+//            Spacer(modifier = Modifier.height(10.dp))
+//            DropDownMenu(2)
             CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
             ReadOnlyTextFieldWithTitle(R.string.auth_hint_login, "Test")
         }
@@ -177,6 +177,28 @@ fun CommonPasswordTextField(
 }
 
 @Composable
+fun ReadOnlyTextField(innerText: String) {
+    TextField(
+        modifier = Modifier.fillMaxWidth(),
+        value = "",
+        onValueChange = {},
+        enabled = false,
+        shape = RoundedCornerShape(10.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = BackgroundInputColor,
+        ),
+        singleLine = true,
+        textStyle = MaterialTheme.typography.subtitle2,
+        placeholder = {
+            Text(text = innerText, color = Color.Black)
+        }
+    )
+}
+
+@Composable
 fun ReadOnlyTextFieldWithTitle(
     @StringRes titleTextId: Int,
     innerText: String
@@ -186,27 +208,94 @@ fun ReadOnlyTextFieldWithTitle(
     ) {
         Text(
             stringResource(titleTextId),
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        ReadOnlyTextField(innerText)
+    }
+}
+
+@Composable
+fun TaskCardRow(@StringRes leftText: Int, rightText: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            stringResource(leftText),
             modifier = Modifier.padding(vertical = 8.dp),
             style = MaterialTheme.typography.subtitle2,
         )
+        Text(
+            rightText,
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
+    }
+}
+
+@Composable
+fun DropDownMenu(selectionNumber: Int) {
+    val suggestions = listOf("Срочная задача", "Средная срочность", "Несрочная задача")
+    val initialSelectedText = if (selectionNumber == 0) ""
+    else suggestions[selectionNumber - 1]
+
+    val expanded = remember { mutableStateOf(false) }
+    val selectedText = remember { mutableStateOf(initialSelectedText) }
+
+    Column() {
         TextField(
-            value = "",
-            onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth(),
+            value = selectedText.value,
+            onValueChange = {},
             enabled = false,
             shape = RoundedCornerShape(10.dp),
+            textStyle = MaterialTheme.typography.subtitle2,
             colors = TextFieldDefaults.textFieldColors(
+                textColor = Color.Black,
                 focusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 backgroundColor = BackgroundInputColor,
             ),
             singleLine = true,
-            textStyle = MaterialTheme.typography.subtitle2,
-            placeholder = {
-                Text(text = innerText, color = Color.Black)
+            trailingIcon = {
+                IconButton(onClick = { expanded.value = !expanded.value }) {
+                    Icon(Icons.Filled.ArrowDropDown, null)
+                }
             }
+
         )
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            suggestions.forEachIndexed { index, label ->
+                DropdownMenuItem(onClick = {
+                    selectedText.value = label
+                    expanded.value = false
+                }) {
+                    Text(text = label)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DropDownMenuWithTitle(@StringRes titleTextId: Int, selectionNumber: Int) {
+    Column {
+        Text(
+            stringResource(titleTextId),
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
+        DropDownMenu(selectionNumber)
     }
 }

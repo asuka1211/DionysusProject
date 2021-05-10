@@ -35,6 +35,7 @@
     <string name="graph_budget">Бюджет</string>
     <string name="graph_status">Состояния</string>
     <string name="open_graph">К статистике</string>
+    <string name="open_tasks">К задачам</string>
     <string name="wrong_credentials">Неверные данные</string>
     <string name="empty_field">Заполните поля</string>
     <string name="all_budget">Весь бюджет: %1$s</string>
