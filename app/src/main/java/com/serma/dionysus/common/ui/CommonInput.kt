@@ -18,19 +18,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.serma.dionysus.R
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
+import com.serma.dionysus.R
+
 
 @Preview
 @Composable
 private fun CommonInputPreview() {
     DionysusTheme {
         Column {
-            //CommonTextField(R.string.example) {}
+            CommonTextField(R.string.example)
             Spacer(modifier = Modifier.height(10.dp))
             CommonTextFieldWithTitle(R.string.example, R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
+//            TaskCardWithParent(testData)
+//            TaskCardsHolder(R.string.in_discussion, listTestData, 2)
 //            CommonPasswordTextField(R.string.example) {}
 //            Spacer(modifier = Modifier.height(10.dp))
 //            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
@@ -240,14 +243,19 @@ fun TaskCardRow(@StringRes leftText: Int, rightText: String) {
 
 @Composable
 fun DropDownMenu(selectionNumber: Int) {
-    val suggestions = listOf("Срочная задача", "Средная срочность", "Несрочная задача")
+    val suggestions = listOf(
+        stringResource(R.string.urgent_task),
+        stringResource(R.string.average_urgency_task),
+        stringResource(R.string.non_urgent_task)
+    )
+
     val initialSelectedText = if (selectionNumber == 0) ""
     else suggestions[selectionNumber - 1]
 
     val expanded = remember { mutableStateOf(false) }
     val selectedText = remember { mutableStateOf(initialSelectedText) }
 
-    Column() {
+    Column {
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
