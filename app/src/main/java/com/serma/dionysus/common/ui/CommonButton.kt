@@ -32,7 +32,7 @@ private fun CommonButtonPreview() {
     Column {
         CommonGradientButton(R.string.example, gradient, {})
         Spacer(modifier = Modifier.height(16.dp))
-        AddingButton(buttonTextId = R.string.add_author, BackgroundInputColor)
+        //AddingButton(buttonTextId = R.string.add_author, BackgroundInputColor)
     }
 }
 
@@ -68,10 +68,9 @@ fun CommonGradientButton(
 }
 
 @Composable
-fun AddingButton(@StringRes buttonTextId: Int, backgroundColor: Color) {
+fun AddingButton(@StringRes buttonTextId: Int, backgroundColor: Color, onClick: () -> Unit) {
     Button(
-
-        onClick = {},
+        onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier.padding(horizontal = 0.dp, vertical = 8.dp).fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(

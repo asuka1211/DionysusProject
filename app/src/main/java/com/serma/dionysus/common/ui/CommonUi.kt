@@ -5,13 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -218,8 +212,12 @@ fun UserCard(name: String, url: String) {
 }
 
 @Composable
-fun AddingTagWithTitle(@StringRes titleTextId: Int, @StringRes buttonTextId: Int, tags: List<String>) {
-    Column{
+fun AddingTagWithTitle(
+    @StringRes titleTextId: Int,
+    @StringRes buttonTextId: Int,
+    tags: List<String>
+) {
+    Column {
         Column {
             Text(
                 stringResource(titleTextId),
@@ -242,10 +240,14 @@ fun AddingTagWithTitle(@StringRes titleTextId: Int, @StringRes buttonTextId: Int
 }
 
 @Composable
-fun AddingUserCardsWithTitle(@StringRes titleTextId: Int, @StringRes buttonTextId: Int, data: List<PersonData>) {
-    Column{
+fun AddingUserCardsWithTitle(
+    @StringRes titleTextId: Int,
+    @StringRes buttonTextId: Int,
+    data: List<PersonData>
+) {
+    Column {
         UserCardsHolderWithTitle(titleTextId, data)
-        AddingButton(buttonTextId = buttonTextId, BackgroundInputColor)
+        AddingButton(buttonTextId = buttonTextId, BackgroundInputColor,{})
     }
 }
 

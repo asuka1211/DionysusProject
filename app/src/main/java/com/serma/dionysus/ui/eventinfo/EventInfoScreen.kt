@@ -41,7 +41,8 @@ fun EventInfoScreen(
     openGraph: (String) -> Unit,
     logout: () -> Unit,
     openProfile: () -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    openTasks: (String) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -101,6 +102,13 @@ fun EventInfoScreen(
                                 .height(56.dp),
                             textId = R.string.open_graph,
                             onClick = { openGraph(eventId) })
+                        Spacer(modifier = Modifier.height(16.dp))
+                        CommonGradientButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
+                            textId = R.string.open_tasks,
+                            onClick = { openTasks(eventId) })
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }

@@ -20,12 +20,14 @@ import com.serma.dionysus.navigation.Destinations.Login
 import com.serma.dionysus.navigation.Destinations.Profile
 import com.serma.dionysus.navigation.Destinations.Registration
 import com.serma.dionysus.navigation.Destinations.Splash
+import com.serma.dionysus.navigation.Destinations.Tasks
 import com.serma.dionysus.ui.auth.login.LoginScreen
 import com.serma.dionysus.ui.eventinfo.EventInfoScreen
 import com.serma.dionysus.ui.events.EventsScreen
 import com.serma.dionysus.ui.graph.GraphScreen
 import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
+import com.serma.dionysus.ui.tasklist.pager.TaskPager
 
 @ExperimentalStdlibApi
 @ExperimentalPagerApi
@@ -103,7 +105,8 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionMa
                         openGraph = { id -> navController.navigate("graph/$id") },
                         navigateBack = { navController.popBackStack() },
                         logout = { logout() },
-                        viewModel = hiltNavGraphViewModel(it)
+                        viewModel = hiltNavGraphViewModel(it),
+                        openTasks = { id -> navController.navigate("tasks/$id") },
                     )
                 }
                 composable(Profile) {
@@ -112,6 +115,18 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionMa
                         viewModel = hiltNavGraphViewModel(it),
                         logout = { logout() },
                         navigateBack = { navController.popBackStack() },
+                    )
+                }
+                composable(Tasks,
+                    arguments = listOf(navArgument("eventId") { defaultValue = "" })) {
+                    TaskPager(
+                        eventId = requireNotNull(it.arguments?.getString("eventId")),
+                        viewModel = hiltNavGraphViewModel(it),
+                        tasksViewModel = hiltNavGraphViewModel(it),
+                        logout = { logout() },
+                        navigateBack = { navController.popBackStack() },
+                        openProfile = actions.profile,
+                        openTask = {}
                     )
                 }
             }
