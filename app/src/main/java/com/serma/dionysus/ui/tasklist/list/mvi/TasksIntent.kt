@@ -5,4 +5,5 @@ import com.serma.dionysus.common.mvi.MviIntent
 sealed class TasksIntent : MviIntent {
     data class Loading(val eventId: String, val typeId: String) : TasksIntent()
     data class Reload(val eventId: String, val typeId: String) : TasksIntent()
+    data class Move(val taskId: String, val nextId: String, val pageId: String) : TasksIntent()
 }

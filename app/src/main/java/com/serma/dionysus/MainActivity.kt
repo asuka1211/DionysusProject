@@ -3,6 +3,7 @@ package com.serma.dionysus
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
