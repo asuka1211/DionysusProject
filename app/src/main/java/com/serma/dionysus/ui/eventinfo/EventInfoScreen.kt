@@ -18,15 +18,16 @@ import com.serma.dionysus.common.ui.*
 @Composable
 fun EventInfoScreenPreview() {
     val testData = PersonData(
+        "1",
         "Максим Яковлев",
         "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
     )
     val listTestData = listOf(testData, testData, testData, testData)
 
     val data = EventInfoData(
-        "Сдерживание грузина",
+        "Создание приложения",
         "Завтра",
-        "Сдерживание мощного, не молодого грузина посредством применения специально оборудованных водометов",
+        "Обсуждение необходимых технологий",
         listTestData,
         "Политех",
         "300$"

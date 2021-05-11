@@ -40,11 +40,11 @@ import com.serma.dionysus.common.theme.DionysusTheme
 fun PreviewCommon() {
     DionysusTheme {
 
-        val testData = PersonData(
-            "Максим Яковлев",
-            "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
-        )
-        val listTestData = listOf(testData, testData)
+//        val testData = PersonData(
+//            "Максим Яковлев",
+//            "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
+//        )
+//        val listTestData = listOf(testData, testData)
 
         Column {
             PersonItem(
@@ -56,17 +56,17 @@ fun PreviewCommon() {
                 "лев ебать",
                 "https://static7.depositphotos.com/1314241/789/i/600/depositphotos_7890698-stock-photo-ferocious-lion.jpg"
             )
+//
+//            UserCardsHolderWithTitle(
+//                titleTextId = R.string.add_author,
+//                data = listTestData
+//            )
 
-            UserCardsHolderWithTitle(
-                titleTextId = R.string.add_author,
-                data = listTestData
-            )
-
-            AddingUserCardsWithTitle(
-                titleTextId = R.string.add_author,
-                buttonTextId = R.string.add_author,
-                data = listTestData
-            )
+//            AddingUserCardsWithTitle(
+//                titleTextId = R.string.add_author,
+//                buttonTextId = R.string.add_author,
+//                data = listTestData
+//            )
         }
     }
 }
@@ -247,7 +247,7 @@ fun AddingUserCardsWithTitle(
 ) {
     Column {
         UserCardsHolderWithTitle(titleTextId, data)
-        AddingButton(buttonTextId = buttonTextId, BackgroundInputColor,{})
+        AddingButton(buttonTextId = buttonTextId, BackgroundInputColor, {})
     }
 }
 
@@ -346,8 +346,8 @@ fun <T : BaseMviViewState> CommonBaseStateScreen(
 }
 
 data class PersonData(
+    val id: String,
     val name: String,
-    val avatarUrl
-    : String,
+    val avatarUrl: String,
 )
 
