@@ -1,24 +1,24 @@
 package com.serma.dionysus.ui.tasklist.list
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.serma.dionysus.R
 import com.serma.dionysus.common.theme.BackgroundInputColor
-import com.serma.dionysus.common.ui.AddingButton
 import com.serma.dionysus.common.ui.TaskCardRow
 
 @Preview
@@ -26,19 +26,18 @@ import com.serma.dionysus.common.ui.TaskCardRow
 fun TaskListPreview() {
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun TaskCardsHolder(
     eventId: String,
     stateId: String,
-    addOnClick: () -> Unit,
     onTaskClicked: (String) -> Unit,
     tasksViewModel: TasksViewModel,
+    reload: () -> Unit
 ) {
     val state = tasksViewModel.uiState.collectAsState()
 
-    if (state.value.data[stateId] == null) {
-        tasksViewModel.load(eventId, stateId)
-    }
+    tasksViewModel.load(eventId, stateId)
 
     if (state.value.loading && state.value.data[stateId] == null) {
         Box(Modifier.fillMaxSize()) {
@@ -46,7 +45,11 @@ fun TaskCardsHolder(
         }
     } else {
         state.value.data[stateId]?.let { data ->
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -74,59 +77,110 @@ fun TaskCardsHolder(
                                 .padding(horizontal = 20.dp)
                         )
                     }
-                    data.tasks.forEach { task ->
-                        if (task.parentTaskName.isNullOrEmpty()) {
-                            TaskCard(task, onTaskClicked)
-                        } else {
-                            TaskCardWithParent(task, onTaskClicked)
+                    LazyColumn {
+                        itemsIndexed(data.tasks) { pos, task ->
+                            TaskCard(task, onTaskClicked, tasksViewModel, stateId, eventId, reload)
+                            Spacer(modifier = Modifier.height(8.dp))
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
                     }
-                    AddingButton(buttonTextId = R.string.add_task, Color.White, addOnClick)
                 }
             }
         }
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
-fun TaskCard(task: TaskListData, onClick: (String) -> Unit) {
-    Box {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color.White)
-                .clickable { onClick(task.id) }
-        ) {
-            TaskCardRow(R.string.tag, task.tag)
-            TaskCardRow(R.string.name, task.name)
-            TaskCardRow(R.string.task_deadline, task.taskDeadline)
-        }
-    }
-}
+fun TaskCard(
+    task: TaskListData,
+    onClick: (String) -> Unit,
+    viewModel: TasksViewModel,
+    stateId: String,
+    eventId: String,
+    reload: () -> Unit
+) {
 
-@Composable
-fun TaskCardWithParent(task: TaskListData, onClick: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(Color.White)
-            .padding(8.dp)
-            .clickable { onClick(task.id) }
-    ) {
-        Column {
-            Text(
-                task.parentTaskName ?: "",
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.subtitle1,
+    val dismissState = rememberDismissState(DismissValue.Default) {
+        it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart
+    }
+
+    val directions = when (task.taskPageInfo.directions) {
+        DirectionsSwipeTask.LEFT -> setOf(DismissDirection.EndToStart)
+        DirectionsSwipeTask.RIGHT -> setOf(DismissDirection.StartToEnd)
+        DirectionsSwipeTask.LEFT_AND_RIGHT -> setOf(
+            DismissDirection.StartToEnd,
+            DismissDirection.EndToStart
+        )
+    }
+
+    SwipeToDismiss(state = dismissState,
+        modifier = Modifier.padding(vertical = 4.dp),
+        directions = directions,
+        dismissThresholds = {
+            FractionalThreshold(0.25f)
+        },
+        background = {
+            val color by animateColorAsState(
+                when (dismissState.targetValue) {
+                    DismissValue.Default -> Color.LightGray
+                    DismissValue.DismissedToEnd -> task.taskPageInfo.rightColor ?: Color.LightGray
+                    DismissValue.DismissedToStart -> task.taskPageInfo.leftColor ?: Color.LightGray
+                }
             )
+
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(color, RoundedCornerShape(10.dp))
+                    .padding(horizontal = 20.dp)
+                    .clip(RoundedCornerShape(10.dp))
+            )
+        }
+    ) {
+        when (dismissState.currentValue) {
+            DismissValue.DismissedToEnd -> {
+                viewModel.move(task.id, task.taskPageInfo.rightId ?: "", stateId)
+                reload()
+            }
+            DismissValue.DismissedToStart -> {
+                viewModel.move(task.id, task.taskPageInfo.leftId ?: "", stateId)
+                reload()
+            }
+        }
+        if (!task.parentTaskName.isNullOrEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.White)
+                    .padding(8.dp)
+                    .clickable { onClick(task.id) }
+            ) {
+                Column {
+                    Text(
+                        task.parentTaskName,
+                        modifier = Modifier.padding(8.dp),
+                        style = MaterialTheme.typography.subtitle1,
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(BackgroundInputColor)
+                    ) {
+                        TaskCardRow(R.string.tag, task.tag)
+                        TaskCardRow(R.string.name, task.name)
+                        TaskCardRow(R.string.task_deadline, task.taskDeadline)
+                    }
+                }
+            }
+        } else {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
-                    .background(BackgroundInputColor)
+                    .background(Color.White)
+                    .clickable { onClick(task.id) }
             ) {
                 TaskCardRow(R.string.tag, task.tag)
                 TaskCardRow(R.string.name, task.name)
@@ -135,7 +189,6 @@ fun TaskCardWithParent(task: TaskListData, onClick: (String) -> Unit) {
         }
     }
 }
-
 
 data class TasksTypeData(
     val typeId: String,
@@ -149,6 +202,19 @@ data class TaskListData(
     val tag: String,
     val name: String,
     val taskDeadline: String,
-    val parentTaskName: String?
+    val parentTaskName: String?,
+    val taskPageInfo: TaskPageInfo
 )
+
+data class TaskPageInfo(
+    val leftColor: Color?,
+    val rightColor: Color?,
+    val directions: DirectionsSwipeTask,
+    val leftId: String?,
+    val rightId: String?
+)
+
+enum class DirectionsSwipeTask {
+    LEFT, RIGHT, LEFT_AND_RIGHT
+}
 

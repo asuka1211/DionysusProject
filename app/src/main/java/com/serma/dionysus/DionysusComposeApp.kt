@@ -1,6 +1,7 @@
 package com.serma.dionysus
 
 import androidx.compose.foundation.background
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
 import com.serma.dionysus.ui.tasklist.pager.TaskPager
 
+@ExperimentalMaterialApi
 @ExperimentalStdlibApi
 @ExperimentalPagerApi
 @Composable

@@ -36,7 +36,7 @@ class TasksReducer @Inject constructor() : MviReducer<TasksViewState, TasksParti
         return lastViewState.copy(
             error = null,
             loading = false,
-            data = map,
+            data = map
         )
     }
 }

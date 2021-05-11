@@ -17,6 +17,7 @@ class TasksUseCase @Inject constructor(
         return when (intent) {
             is TasksIntent.Loading -> reduceLoading(intent)
             is TasksIntent.Reload -> reduceReload(intent)
+            is TasksIntent.Move -> reduceMove(intent)
         }
     }
 
@@ -36,6 +37,15 @@ class TasksUseCase @Inject constructor(
                 is Result.Error -> TasksPartitionState.Error(result.message)
             }
         }.onStart { emit(TasksPartitionState.Loading) }
+    }
+
+    private suspend fun reduceMove(intent: TasksIntent.Move): Flow<TasksPartitionState> {
+        return interactor.move(intent.taskId, intent.nextId, intent.pageId).map { result ->
+            when (result) {
+                is Result.Success -> TasksPartitionState.LoadingData(intent.pageId, result.data)
+                is Result.Error -> TasksPartitionState.Error(result.message)
+            }
+        }
     }
 
 }

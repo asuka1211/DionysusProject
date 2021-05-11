@@ -3,6 +3,7 @@ package com.serma.dionysus.ui.tasklist.pager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,6 +20,7 @@ import com.serma.dionysus.ui.tasklist.list.TaskCardsHolder
 import com.serma.dionysus.ui.tasklist.list.TasksViewModel
 
 
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun TaskPager(
@@ -63,9 +65,9 @@ fun TaskPager(
                             TaskCardsHolder(
                                 eventId,
                                 ids[page],
-                                { openTask("") },
                                 { id -> openTask(id) },
-                                tasksViewModel
+                                tasksViewModel,
+                                { viewModel.reload(eventId) }
                             )
                         }
                         HorizontalPagerIndicator(
