@@ -1,7 +1,6 @@
 package com.serma.dionysus.common.ui
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,9 +11,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,27 +21,26 @@ import androidx.compose.ui.unit.dp
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.R
-import com.serma.dionysus.ui.tasklist.TaskData
+import com.serma.dionysus.ui.task.ImportanceData
+
 
 @Preview
 @Composable
 private fun CommonInputPreview() {
-    val testData = TaskData(
-        "Привер тэга",
-        "Пример имени",
-        "Сегодня",
-        "",
-        0
-    )
-    val listTestData = listOf(testData, testData)
     DionysusTheme {
         Column {
             CommonTextField(R.string.example)
             Spacer(modifier = Modifier.height(10.dp))
             CommonTextFieldWithTitle(R.string.example, R.string.example) {}
             Spacer(modifier = Modifier.height(10.dp))
-            TaskCardWithParent(testData)
-            TaskCardsHolder(R.string.in_discussion, listTestData, 2)
+//            TaskCardWithParent(testData)
+//            TaskCardsHolder(R.string.in_discussion, listTestData, 2)
+//            CommonPasswordTextField(R.string.example) {}
+//            Spacer(modifier = Modifier.height(10.dp))
+//            CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
+//            ReadOnlyTextFieldWithTitle(R.string.auth_hint_email, "Test")
+//            Spacer(modifier = Modifier.height(10.dp))
+//            DropDownMenu(2)
             CommonTextWithTitleClickable(R.string.example, R.string.example, "sad", {})
             ReadOnlyTextFieldWithTitle(R.string.auth_hint_login, "Test")
         }
@@ -187,6 +183,7 @@ fun CommonPasswordTextField(
 @Composable
 fun ReadOnlyTextField(innerText: String) {
     TextField(
+        modifier = Modifier.fillMaxWidth(),
         value = "",
         onValueChange = {},
         enabled = false,
@@ -201,7 +198,6 @@ fun ReadOnlyTextField(innerText: String) {
         textStyle = MaterialTheme.typography.subtitle2,
         placeholder = {
             Text(text = innerText, color = Color.Black)
-
         }
     )
 }
@@ -216,7 +212,9 @@ fun ReadOnlyTextFieldWithTitle(
     ) {
         Text(
             stringResource(titleTextId),
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+                .fillMaxWidth(),
             style = MaterialTheme.typography.subtitle2,
         )
         ReadOnlyTextField(innerText)
@@ -245,103 +243,15 @@ fun TaskCardRow(@StringRes leftText: Int, rightText: String) {
 }
 
 @Composable
-fun TaskCard(task: TaskData) {
-    Box {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(Color.White)
-        ) {
-            TaskCardRow(R.string.tag, task.tag)
-            TaskCardRow(R.string.name, task.name)
-            TaskCardRow(R.string.task_deadline, task.taskDeadlide)
-        }
-    }
-}
-
-@Composable
-fun TaskCardWithParent(task: TaskData) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(Color.White)
-            .padding(8.dp)
-    ) {
-        Column {
-            Text(
-                task.parentTaskName,
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.subtitle1,
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(BackgroundInputColor)
-            ) {
-                TaskCardRow(R.string.tag, task.tag)
-                TaskCardRow(R.string.name, task.name)
-                TaskCardRow(R.string.task_deadline, task.taskDeadlide)
-            }
-        }
-    }
-}
-
-@Composable
-fun TaskCardsHolder(@StringRes titleTextId: Int, tasks: List<TaskData>, pageNum: Int) {
-    tasks.forEachIndexed { index, task ->
-        if (task.pageNum != pageNum) return@forEachIndexed
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(BackgroundInputColor)
-                .padding(8.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    stringResource(titleTextId),
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    style = MaterialTheme.typography.subtitle1,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box(
-                    modifier = Modifier
-                        .size(44.dp, 18.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Green)
-                        .align(Alignment.CenterVertically)
-                        .padding(horizontal = 20.dp)
-                )
-            }
-            if (task.parentTaskName == "") TaskCard(task)
-            else TaskCardWithParent(task)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-    }
-}
-
-@Composable
-fun DropDownMenu(selectionNumber: Int) {
-    val suggestions = listOf(
-        stringResource(R.string.urgent_task),
-        stringResource(R.string.average_urgency_task),
-        stringResource(R.string.non_urgent_task)
-    )
-
-    val initialSelectedText = if (selectionNumber == 0) ""
-    else suggestions[selectionNumber - 1]
-
+fun <T> DropDownMenu(
+    contentList: List<T>,
+    initialText: String,
+    contentItem: @Composable (T, (T) -> Unit ) -> Unit
+) {
     val expanded = remember { mutableStateOf(false) }
-    val selectedText = remember { mutableStateOf(initialSelectedText) }
+    val selectedText = remember { mutableStateOf(initialText) }
 
-    Column() {
+    Column {
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -370,26 +280,43 @@ fun DropDownMenu(selectionNumber: Int) {
             onDismissRequest = { expanded.value = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            suggestions.forEachIndexed { index, label ->
-                DropdownMenuItem(onClick = {
-                    selectedText.value = label
-                    expanded.value = false
-                }) {
-                    Text(text = label)
-                }
+            contentList.forEachIndexed { index, item ->
+                contentItem(item, {})
+//                DropdownMenuItem(onClick = {
+//                    selectedText.value = item.text
+//                    expanded.value = false
+//                }) {
+//                    contentItem()
+//                }
             }
         }
     }
 }
 
 @Composable
-fun DropDownMenuWithTitle(@StringRes titleTextId: Int, selectionNumber: Int) {
+fun <T> DropDownMenuWithTitle(
+    @StringRes titleTextId: Int,
+    contentList: List<T>,
+    initialText: String,
+    contentItem: @Composable (T, (T) -> Unit ) -> Unit
+) {
     Column {
         Text(
             stringResource(titleTextId),
             modifier = Modifier.padding(vertical = 8.dp),
             style = MaterialTheme.typography.subtitle2,
         )
-        DropDownMenu(selectionNumber)
+        DropDownMenu(contentList, initialText, contentItem)
+    }
+}
+
+@Composable
+fun DropDownItem(item: ImportanceData) {
+    Column {
+        Text(
+            item.name,
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
     }
 }

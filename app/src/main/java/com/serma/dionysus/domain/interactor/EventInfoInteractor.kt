@@ -15,10 +15,12 @@ import javax.inject.Singleton
 class EventInfoInteractor @Inject constructor() {
 
     private val testData1 = PersonData(
+        "1",
         "Максим Яковлев",
         "https://s0.rbk.ru/v6_top_pics/media/img/5/46/756038770746465.jpg"
     )
     private val testData2 = PersonData(
+        "2",
         "Олег Тинькофф",
         "https://interesnyefakty.org/wp-content/uploads/oleg-tinkov.jpg"
     )
