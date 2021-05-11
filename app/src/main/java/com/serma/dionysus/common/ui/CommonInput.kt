@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.serma.dionysus.common.theme.BackgroundInputColor
 import com.serma.dionysus.common.theme.DionysusTheme
 import com.serma.dionysus.R
+import com.serma.dionysus.ui.task.ImportanceData
 
 
 @Preview
@@ -242,18 +243,13 @@ fun TaskCardRow(@StringRes leftText: Int, rightText: String) {
 }
 
 @Composable
-fun DropDownMenu(selectionNumber: Int) {
-    val suggestions = listOf(
-        stringResource(R.string.urgent_task),
-        stringResource(R.string.average_urgency_task),
-        stringResource(R.string.non_urgent_task)
-    )
-
-    val initialSelectedText = if (selectionNumber == 0) ""
-    else suggestions[selectionNumber - 1]
-
+fun <T> DropDownMenu(
+    contentList: List<T>,
+    initialText: String,
+    contentItem: @Composable (T, (T) -> Unit ) -> Unit
+) {
     val expanded = remember { mutableStateOf(false) }
-    val selectedText = remember { mutableStateOf(initialSelectedText) }
+    val selectedText = remember { mutableStateOf(initialText) }
 
     Column {
         TextField(
@@ -284,26 +280,43 @@ fun DropDownMenu(selectionNumber: Int) {
             onDismissRequest = { expanded.value = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            suggestions.forEachIndexed { index, label ->
-                DropdownMenuItem(onClick = {
-                    selectedText.value = label
-                    expanded.value = false
-                }) {
-                    Text(text = label)
-                }
+            contentList.forEachIndexed { index, item ->
+                contentItem(item, {})
+//                DropdownMenuItem(onClick = {
+//                    selectedText.value = item.text
+//                    expanded.value = false
+//                }) {
+//                    contentItem()
+//                }
             }
         }
     }
 }
 
 @Composable
-fun DropDownMenuWithTitle(@StringRes titleTextId: Int, selectionNumber: Int) {
+fun <T> DropDownMenuWithTitle(
+    @StringRes titleTextId: Int,
+    contentList: List<T>,
+    initialText: String,
+    contentItem: @Composable (T, (T) -> Unit ) -> Unit
+) {
     Column {
         Text(
             stringResource(titleTextId),
             modifier = Modifier.padding(vertical = 8.dp),
             style = MaterialTheme.typography.subtitle2,
         )
-        DropDownMenu(selectionNumber)
+        DropDownMenu(contentList, initialText, contentItem)
+    }
+}
+
+@Composable
+fun DropDownItem(item: ImportanceData) {
+    Column {
+        Text(
+            item.name,
+            modifier = Modifier.padding(vertical = 8.dp),
+            style = MaterialTheme.typography.subtitle2,
+        )
     }
 }
