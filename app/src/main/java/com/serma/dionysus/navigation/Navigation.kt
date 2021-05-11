@@ -19,6 +19,7 @@ object Destinations {
     const val Event = "event/{eventId}"
     const val Profile = "profile"
     const val Tasks = "tasks/{eventId}"
+    const val Task = "task/{taskId}"
     const val Logout = "logout"
 }
 

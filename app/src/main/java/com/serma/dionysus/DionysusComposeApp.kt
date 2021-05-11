@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.*
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.serma.dionysus.ui.auth.registration.RegistrationScreen
 import com.serma.dionysus.auth.manager.SessionManager
 import com.serma.dionysus.common.theme.BackgroundColor
 import com.serma.dionysus.common.theme.DionysusTheme
@@ -21,27 +20,33 @@ import com.serma.dionysus.navigation.Destinations.Login
 import com.serma.dionysus.navigation.Destinations.Profile
 import com.serma.dionysus.navigation.Destinations.Registration
 import com.serma.dionysus.navigation.Destinations.Splash
+import com.serma.dionysus.navigation.Destinations.Task
 import com.serma.dionysus.navigation.Destinations.Tasks
 import com.serma.dionysus.ui.auth.login.LoginScreen
+import com.serma.dionysus.ui.auth.registration.RegistrationScreen
 import com.serma.dionysus.ui.eventinfo.EventInfoScreen
 import com.serma.dionysus.ui.events.EventsScreen
 import com.serma.dionysus.ui.graph.GraphScreen
 import com.serma.dionysus.ui.profile.ProfileScreen
 import com.serma.dionysus.ui.splash.SplashScreen
+import com.serma.dionysus.ui.task.TaskCreatingScreen
 import com.serma.dionysus.ui.tasklist.pager.TaskPager
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @ExperimentalStdlibApi
 @ExperimentalPagerApi
 @Composable
 fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionManager) {
     val navController = rememberNavController()
-    fun logout(){
+    fun logout() {
         navController.navigate(Login) {
             popUpTo = 0
         }
         sessionManager.logout()
     }
+
     val actions = remember(navController) { Action(navController) }
     DionysusTheme {
         Surface(modifier = Modifier.background(BackgroundColor)) {
@@ -119,8 +124,10 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionMa
                         navigateBack = { navController.popBackStack() },
                     )
                 }
-                composable(Tasks,
-                    arguments = listOf(navArgument("eventId") { defaultValue = "" })) {
+                composable(
+                    Tasks,
+                    arguments = listOf(navArgument("eventId") { defaultValue = "" })
+                ) {
                     TaskPager(
                         eventId = requireNotNull(it.arguments?.getString("eventId")),
                         viewModel = hiltNavGraphViewModel(it),
@@ -128,7 +135,19 @@ fun DionysusComposeApp(openDatePicker: OpenDatePicker, sessionManager: SessionMa
                         logout = { logout() },
                         navigateBack = { navController.popBackStack() },
                         openProfile = actions.profile,
-                        openTask = {}
+                        openTask = { id -> navController.navigate("task/$id") }
+                    )
+                }
+                composable(
+                    Task,
+                    arguments = listOf(navArgument("taskId") { defaultValue = "" })
+                ) {
+                    TaskCreatingScreen(
+                        taskId = requireNotNull(it.arguments?.getString("taskId")),
+                        viewModel = hiltNavGraphViewModel(it),
+                        logout = { logout() },
+                        navigateBack = { navController.popBackStack() },
+                        openProfile = actions.profile,
                     )
                 }
             }
