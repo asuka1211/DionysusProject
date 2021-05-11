@@ -24,15 +24,15 @@ class TaskViewModel @Inject constructor(
 
     override fun createInitialState() = TaskViewState()
 
-    fun load(eventId: String, taskId: String) {
+    fun load(taskId: String) {
         viewModelScope.launch {
-            sendIntent(TaskIntent.Loading(eventId, taskId))
+            sendIntent(TaskIntent.Loading(taskId))
         }
     }
 
-    fun reload(eventId: String, taskId: String) {
+    fun reload(taskId: String) {
         viewModelScope.launch {
-            sendIntent(TaskIntent.Reload(eventId, taskId))
+            sendIntent(TaskIntent.Reload(taskId))
         }
     }
 

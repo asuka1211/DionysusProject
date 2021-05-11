@@ -93,7 +93,6 @@ class TasksInteractor @Inject constructor() {
 
     suspend fun load(eventId: String, pageId: String): Flow<Result<TasksTypeData>> {
         return flow {
-            delay(100L)
             emit(Result.Success(discussData.first { it.typeId == pageId }))
         }.flowOn(Dispatchers.IO)
     }

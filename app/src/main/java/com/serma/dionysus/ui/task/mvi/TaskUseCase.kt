@@ -21,7 +21,7 @@ class TaskUseCase @Inject constructor(
     }
 
     private suspend fun reduceLoading(intent: TaskIntent.Loading): Flow<TaskPartitionState> {
-        return interactor.load(intent.eventId).map { result ->
+        return interactor.load(intent.taskId).map { result ->
             when (result) {
                 is Result.Success -> TaskPartitionState.LoadingData(result.data)
                 is Result.Error -> TaskPartitionState.Error(result.message)
@@ -30,7 +30,7 @@ class TaskUseCase @Inject constructor(
     }
 
     private suspend fun reduceReload(intent: TaskIntent.Reload): Flow<TaskPartitionState> {
-        return interactor.load(intent.eventId).map { result ->
+        return interactor.load(intent.taskId).map { result ->
             when (result) {
                 is Result.Success -> TaskPartitionState.LoadingData(result.data)
                 is Result.Error -> TaskPartitionState.Error(result.message)
