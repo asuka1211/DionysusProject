@@ -40,7 +40,6 @@
     <string name="manager">Организаторы</string>
     <string name="name">Название</string>
     <string name="non_urgent_task">Несрочная задача</string>
-    <string name="open_graph">К статистике</string>
     <string name="profile">Профиль</string>
     <string name="profile_name">Имя</string>
     <string name="profile_name_hint">Введите имя</string>
@@ -59,6 +58,8 @@
     <string name="screen_route_events">Мероприятия</string>
     <string name="screen_route_stats">Статистика</string>
     <string name="screen_route_tasks">Задачи</string>
+    <string name="open_graph">К статистике</string>
+    <string name="open_tasks">К задачам</string>
     <string name="urgent_task">Срочная задача</string>
     <string name="wrong_credentials">Неверные данные</string>
 </resources>

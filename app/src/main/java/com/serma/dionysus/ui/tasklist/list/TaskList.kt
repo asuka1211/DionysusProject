@@ -39,7 +39,7 @@ fun TaskCardsHolder(
 
     tasksViewModel.load(eventId, stateId)
 
-    if (state.value.loading) {
+    if (state.value.loading && state.value.data[stateId] == null) {
         Box(Modifier.fillMaxSize()) {
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
